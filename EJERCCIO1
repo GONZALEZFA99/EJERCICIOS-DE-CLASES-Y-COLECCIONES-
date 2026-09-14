@@ -1,0 +1,116 @@
+# EJERCICIO 1 - VALIDADOR DE NOTAS CON PROMEDIO
+#Clase Calificador que: (1) tenga método validar_nota(nota) que retorne True si 0 ≤ nota ≤ 100, False en caso contrario; 
+#(2) tenga método cargar_notas(*args) que reciba múltiples notas, las valide, agregue solo las válidas a una lista interna, y retorne esa lista; 
+#(3) tenga método promedio() que retorne el promedio de notas almacenadas.
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Notas individuales o varias notas recibidas mediante *args.
+# PROCESO:
+# Validar cada nota comprobando que esté entre 0 y 100.
+# Las notas válidas se guardan en una lista interna.
+# Luego se suman las notas válidas y se dividen para
+# la cantidad de notas almacenadas.
+# SALIDA:
+# True o False al validar una nota.
+# Una lista con las notas válidas.
+# El promedio de las notas almacenadas.
+# Ejemplo de entrada:
+# c = Calificador()
+# c.cargar_notas(85, 92, 110, 78, -5, 88)
+# c.promedio()
+# Salida esperada:
+# [85, 92, 78, 88]
+# 85.75
+# 2. BOSQUEJO A MANO
+# notas = [85, 92, 110, 78, -5, 88]
+# Un solo recorrido:
+#   validar cada nota entre 0 y 100
+#   si es válida, agregarla a la lista
+#   si no es válida, no agregarla
+# Al final:
+#   lista = [85, 92, 78, 88]
+#   sumar las notas válidas
+#   dividir la suma para la cantidad de notas
+#   obtener el promedio
+# 3. PATRÓN
+# Clase con lista interna y validación de datos.
+# Se utiliza:
+# - __init__ para crear la lista de notas.
+# - un método para validar cada nota.
+# - *args para recibir varias notas.
+# - un recorrido for para revisar cada nota.
+# - append() para guardar solo las notas válidas.
+# - sum() y len() para calcular el promedio.
+# 4. CÓDIGO
+
+class Calificador:
+    def __init__(self):
+        self.notas=[]
+
+    def validar_nota(self,nota):
+        if nota >=0 and nota <= 100:
+            return True
+        else:
+            return False
+
+    def cargar_notas(self,*args):
+        for nota in args:
+            if self.validar_nota(nota):
+                self.notas.append(nota)
+        return self.notas
+
+    def promedio(self):
+        return sum(self.notas)/len(self.notas)
+
+
+c = Calificador()
+
+print(c.cargar_notas(85, 92, 110, 78, -5, 88))
+print(c.promedio())
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# c.cargar_notas(85, 92, 110, 78, -5, 88)
+# Inicio:
+# self.notas = []
+# Paso 1:
+# nota = 85
+# 85 está entre 0 y 100 -> True
+# Se agrega a la lista.
+# self.notas = [85]
+# Paso 2:
+# nota = 92
+# 92 está entre 0 y 100 -> True
+# Se agrega a la lista.
+# self.notas = [85, 92]
+# Paso 3:
+# nota = 110
+# 110 no está entre 0 y 100 -> False
+# No se agrega.
+# self.notas = [85, 92]
+#
+# Paso 4:
+# nota = 78
+# 78 está entre 0 y 100 -> True
+# Se agrega a la lista.
+# self.notas = [85, 92, 78]
+# Paso 5:
+# nota = -5
+# -5 no está entre 0 y 100 -> False
+# No se agrega.
+# self.notas = [85, 92, 78]
+# Paso 6:
+# nota = 88
+# 88 está entre 0 y 100 -> True
+# Se agrega a la lista.
+# self.notas = [85, 92, 78, 88]
+# Lista final:
+# [85, 92, 78, 88]
+# Para calcular el promedio:
+# suma = 85 + 92 + 78 + 88
+# suma = 343
+# cantidad de notas = 4
+# promedio = 343 / 4
+# promedio = 85.75
+# Resultado final:
+# [85, 92, 78, 88]
+# 85.75
