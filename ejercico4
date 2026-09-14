@@ -1,0 +1,138 @@
+# EJERCICIO 4 - INVERSOR DE SECUENCIAS
+#Clase InversorSecuencia que:
+#(1) tenga método invertir_lista(lista) que retorne la lista invertida sin usar reversed() (usa manual con bucles); 
+#(2) tenga método invertir_multiples(*listas) que reutilice el anterior para invertir varias listas y retorne un diccionario {lista_original: lista_invertida}.
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Una lista o varias listas recibidas mediante *listas.
+# PROCESO:
+# Invertir manualmente cada lista sin utilizar reversed().
+# Para varias listas, reutilizar el método invertir_lista().
+# Guardar cada lista original como una tupla para poder
+# utilizarla como clave de un diccionario.
+# SALIDA:
+# Una lista invertida.
+# O un diccionario con la secuencia original y su invertida.
+# Ejemplo de entrada:
+# inv = InversorSecuencia()
+# inv.invertir_lista([1, 2, 3])
+# Salida esperada:
+# [3, 2, 1]
+# 2. BOSQUEJO A MANO
+
+# lista = [1, 2, 3]
+#
+# Crear:
+#   lista_invertida = []
+#
+# Recorrer desde la última posición hasta la primera:
+#   tomar 3 y agregarlo
+#   tomar 2 y agregarlo
+#   tomar 1 y agregarlo
+#
+# Al final:
+#   lista_invertida = [3, 2, 1]
+#
+# Para varias listas:
+#   recorrer cada lista
+#   convertir la lista original en tupla
+#   invertirla reutilizando invertir_lista()
+#   guardar en un diccionario:
+#
+#   tupla_original -> lista_invertida
+
+# 3. PATRÓN
+# Recorrido inverso manual de una lista.
+#
+# Se utiliza:
+# - una lista vacía para guardar el resultado.
+# - range() para recorrer desde el último índice al primero.
+# - append() para agregar los elementos.
+# - *listas para recibir varias listas.
+# - un diccionario para almacenar original -> invertida.
+# - tuple() para convertir la lista original en una clave válida.
+# - reutilización del método invertir_lista().
+
+
+# ------------------------------------------------------------
+# 4. CÓDIGO
+# ------------------------------------------------------------
+
+class InversorSecuencia:
+
+    def invertir_lista(self,lista):
+        lista_invertida = []
+
+        for i in range(len(lista)-1,-1,-1):
+            lista_invertida.append(lista[i])
+
+        return lista_invertida
+
+    def invertir_multiples(self,*listas):
+        resultado = {}
+
+        for lista in listas:
+            resultado[tuple(lista)] = self.invertir_lista(lista)
+
+        return resultado
+
+
+inv = InversorSecuencia()
+
+print(inv.invertir_lista([1,2,3]))
+
+print(inv.invertir_multiples(
+    [1,2,3],
+    [4,5,6]
+))
+
+
+# ------------------------------------------------------------
+# 5. PRUEBA PASO A PASO
+# ------------------------------------------------------------
+#
+# PRUEBA 1:
+#
+# Entrada:
+# [1, 2, 3]
+#
+# len(lista) = 3
+#
+# El recorrido comienza en:
+# len(lista) - 1 = 2
+#
+# i = 2
+# lista[2] = 3
+# lista_invertida = [3]
+#
+# i = 1
+# lista[1] = 2
+# lista_invertida = [3, 2]
+#
+# i = 0
+# lista[0] = 1
+# lista_invertida = [3, 2, 1]
+#
+# Resultado:
+# [3, 2, 1]
+#
+#
+# PRUEBA 2:
+#
+# Entrada:
+# [1, 2, 3]
+# [4, 5, 6]
+#
+# Primera lista:
+# tuple([1, 2, 3]) = (1, 2, 3)
+# invertir_lista([1, 2, 3]) = [3, 2, 1]
+#
+# Segunda lista:
+# tuple([4, 5, 6]) = (4, 5, 6)
+# invertir_lista([4, 5, 6]) = [6, 5, 4]
+#
+# Diccionario final:
+# {
+#   (1, 2, 3): [3, 2, 1],
+#   (4, 5, 6): [6, 5, 4]
+# }
