@@ -1,0 +1,140 @@
+
+# EJERCICIO 3 - GESTOR DE COMPRAS CON TOTALES
+# Clase CarroCompras que: (1) tenga método agregar_articulo(nombre, precio) que guarde en un diccionario {nombre: precio}; 
+#(2) tenga método total_carrito() que retorne la suma de todos los precios; 
+#(3) tenga método articulos_por_rango(precio_min, precio_max) que retorne una lista con artículos dentro del rango.
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Nombres de artículos y sus respectivos precios.
+#
+# PROCESO:
+# Guardar cada artículo y su precio en un diccionario.
+# Sumar todos los precios almacenados.
+# Recorrer los artículos y comprobar cuáles están
+# dentro de un rango de precios.
+#
+# SALIDA:
+# Total del carrito.
+# Lista de artículos que se encuentran dentro del rango.
+#
+# Ejemplo de entrada:
+# c = CarroCompras()
+# c.agregar_articulo("pan", 2.50)
+# c.agregar_articulo("leche", 3.00)
+# c.total_carrito()
+#
+# Salida esperada:
+# 5.50
+# 2. BOSQUEJO A MANO
+# articulos = {
+#   "pan": 2.50,
+#   "leche": 3.00
+# }
+#
+# Guardar:
+#   nombre -> precio
+#
+# Para obtener el total:
+#   sumar todos los precios del diccionario
+#
+# Para buscar por rango:
+#   recorrer cada artículo y precio
+#   si el precio está entre mínimo y máximo:
+#       agregar el nombre a una lista
+#
+# Al final:
+#   total = 5.50
+#   retornar los artículos que estén dentro del rango
+# 3. PATRÓN
+# Clase con diccionario para almacenar datos relacionados.
+# Se utiliza:
+# - __init__ para crear el diccionario vacío.
+# - nombre como clave del diccionario.
+# - precio como valor del diccionario.
+# - values() para obtener los precios.
+# - sum() para calcular el total.
+# - items() para recorrer nombre y precio.
+# - una lista para guardar los artículos dentro del rango.
+# - append() para agregar artículos a la lista.
+
+# 4. CÓDIGO
+
+class CarroCompras:
+    def __init__(self):
+        self.articulos = {}
+
+    def agregar_articulo(self,nombre,precio):
+        self.articulos[nombre] = precio
+
+    def total_carrito(self):
+        return sum(self.articulos.values())
+
+    def articulos_por_rango(self,precio_min,precio_max):
+        resultado = []
+
+        for nombre,precio in self.articulos.items():
+            if precio >= precio_min and precio <= precio_max:
+                resultado.append(nombre)
+
+        return resultado
+
+
+c = CarroCompras()
+
+c.agregar_articulo("pan",2.50)
+c.agregar_articulo("leche",3.00)
+
+print(f"{c.total_carrito():.2f}")
+print(c.articulos_por_rango(2.00,2.80))
+
+# 5. PRUEBA PASO A PASO
+# Inicio:
+# self.articulos = {}
+#
+# Paso 1:
+# Se agrega:
+# nombre = "pan"
+# precio = 2.50
+#
+# self.articulos = {
+#   "pan": 2.50
+# }
+#
+# Paso 2:
+# Se agrega:
+# nombre = "leche"
+# precio = 3.00
+#
+# self.articulos = {
+#   "pan": 2.50,
+#   "leche": 3.00
+# }
+#
+# Para calcular el total:
+#
+# sum(self.articulos.values())
+#
+# precios:
+# 2.50 + 3.00 = 5.50
+#
+# total = 5.50
+#
+# Para buscar artículos entre 2.00 y 2.80:
+#
+# "pan":
+# precio = 2.50
+# 2.50 >= 2.00 -> True
+# 2.50 <= 2.80 -> True
+# Se agrega a resultado.
+#
+# resultado = ["pan"]
+#
+# "leche":
+# precio = 3.00
+# 3.00 >= 2.00 -> True
+# 3.00 <= 2.80 -> False
+# No se agrega.
+#
+# Resultado final:
+# Total = 5.50
+# Artículos entre 2.00 y 2.80 = ["pan"]
