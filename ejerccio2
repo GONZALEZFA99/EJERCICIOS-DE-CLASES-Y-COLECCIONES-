@@ -1,0 +1,127 @@
+
+# EJERCICIO 2 - CONTADOR DE PALABRAS ÚNICAS
+
+# Clase AnalizadorTexto que: 
+#(1) tenga método agregar_palabra(palabra) que agregue la palabra a un conjunto (para evitar duplicados) y a una lista (para el orden);
+#(2) tenga método contar_palabras() que retorne cuántas palabras únicas hay; 
+#(3) tenga método agregar_multiples(*args) que reutilice agregar_palabra para varios.
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Palabras individuales o varias palabras recibidas mediante *args.
+# PROCESO:
+# Guardar cada palabra en un conjunto para evitar duplicados.
+# También guardar las palabras únicas en una lista para
+# conservar el orden en que fueron ingresadas.
+# Luego contar cuántas palabras únicas existen.
+# SALIDA:
+# Cantidad de palabras únicas.
+# Ejemplo de entrada:
+# at = AnalizadorTexto()
+# at.agregar_multiples("hola", "mundo", "hola")
+# at.contar_palabras()
+# Salida esperada:
+# 2. BOSQUEJO A MANO
+# palabras = ["hola", "mundo", "hola"]
+# Crear:
+#   un conjunto vacío
+#   una lista vacía
+#
+# Un solo recorrido:
+#   revisar cada palabra
+#   si no está en el conjunto:
+#       agregarla al conjunto
+#       agregarla a la lista
+#
+# Si ya existe:
+#   no volver a agregarla
+#
+# Al final:
+#   conjunto = {"hola", "mundo"}
+#   lista = ["hola", "mundo"]
+#   contar palabras únicas = 2
+# 3. PATRÓN
+# Uso combinado de conjunto y lista.
+# Se utiliza:
+# - __init__ para crear el conjunto y la lista.
+# - set() para evitar palabras duplicadas.
+# - una lista para conservar el orden.
+# - in / not in para comprobar si una palabra ya existe.
+# - add() para agregar al conjunto.
+# - append() para agregar a la lista.
+# - *args para recibir varias palabras.
+# - for para recorrerlas.
+# - len() para contar las palabras únicas.
+# 4. CÓDIGO
+
+class AnalizadorTexto:
+    def __init__(self):
+        self.palabras = set()
+        self.lista_palabras = []
+
+    def agregar_palabra(self,palabra):
+        if palabra not in self.palabras:
+            self.palabras.add(palabra)
+            self.lista_palabras.append(palabra)
+
+    def contar_palabras(self):
+        return len(self.palabras)
+
+    def agregar_multiples(self,*args):
+        for palabra in args:
+            self.agregar_palabra(palabra)
+
+
+at = AnalizadorTexto()
+
+at.agregar_multiples("hola","mundo","hola")
+
+print(at.contar_palabras())
+
+
+# ------------------------------------------------------------
+# 5. PRUEBA PASO A PASO
+# ------------------------------------------------------------
+#
+# Entrada:
+# at.agregar_multiples("hola", "mundo", "hola")
+#
+# Inicio:
+# self.palabras = set()
+# self.lista_palabras = []
+#
+# Paso 1:
+# palabra = "hola"
+#
+# "hola" no está en el conjunto.
+# Se agrega al conjunto.
+# Se agrega a la lista.
+#
+# self.palabras = {"hola"}
+# self.lista_palabras = ["hola"]
+#
+# Paso 2:
+# palabra = "mundo"
+#
+# "mundo" no está en el conjunto.
+# Se agrega al conjunto.
+# Se agrega a la lista.
+#
+# self.palabras = {"hola", "mundo"}
+# self.lista_palabras = ["hola", "mundo"]
+#
+# Paso 3:
+# palabra = "hola"
+#
+# "hola" ya está en el conjunto.
+# No se vuelve a agregar.
+#
+# self.palabras = {"hola", "mundo"}
+# self.lista_palabras = ["hola", "mundo"]
+#
+# Para contar:
+# len(self.palabras)
+#
+# Cantidad de palabras únicas = 2
+#
+# Resultado final:
+# 2
