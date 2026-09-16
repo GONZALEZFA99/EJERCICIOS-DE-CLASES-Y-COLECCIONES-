@@ -1,0 +1,249 @@
+# EJERCICIO 17 - GRUPO DE EDADES
+# Clase AgrupadorEdades que: (1) tenga método clasificar_edad(edad)
+# que retorne la categoría ("niño", "adolescente", "adulto", "mayor");
+# (2) tenga método agrupar_por_categoria(*edades) que retorne un
+# diccionario con {categoría: [edades]}; (3) tenga método
+# edad_promedio_categoria(categoria).
+#
+# ENTRADA:
+# Edades individuales o varias edades recibidas mediante *edades.
+#
+# PROCESO:
+# Clasificar cada edad utilizando if/elif.
+# Guardar las edades dentro de un diccionario donde la clave
+# sea la categoría y el valor sea una lista de edades.
+# Calcular el promedio de las edades de una categoría.
+#
+# SALIDA:
+# Diccionario agrupado por categorías.
+# Promedio de edad de una categoría.
+#
+# Ejemplo de entrada:
+# ae = AgrupadorEdades()
+# ae.agrupar_por_categoria(5, 15, 30, 70)
+#
+# Salida esperada:
+# {
+# 'niño':[5],
+# 'adolescente':[15],
+# 'adulto':[30],
+# 'mayor':[70]
+# }
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Varias edades recibidas mediante *edades.
+#
+# PROCESO:
+# Analizar cada edad y determinar su categoría.
+#
+# Clasificación:
+# niño:
+# edad menor a 12.
+#
+# adolescente:
+# edad entre 12 y 17.
+#
+# adulto:
+# edad entre 18 y 59.
+#
+# mayor:
+# edad de 60 en adelante.
+#
+# Luego guardar cada edad dentro de una lista según
+# la categoría correspondiente.
+#
+# Para calcular el promedio se suman las edades de la
+# categoría y se dividen para la cantidad de elementos.
+#
+# SALIDA:
+# Diccionario con categorías y listas de edades.
+# Promedio de una categoría.
+
+
+# 2. BOSQUEJO A MANO
+# edades = [5,15,30,70]
+#
+# Crear diccionario:
+# grupos = {}
+#
+# Edad = 5
+# 5 < 12
+# categoría = "niño"
+# grupos = {"niño":[5]}
+#
+# Edad = 15
+# 12 <= 15 < 18
+# categoría = "adolescente"
+# grupos = {
+#   "niño":[5],
+#   "adolescente":[15]
+# }
+#
+# Edad = 30
+# 18 <= 30 < 60
+# categoría = "adulto"
+#
+# Edad = 70
+# 70 >= 60
+# categoría = "mayor"
+#
+# Resultado:
+# {
+#  "niño":[5],
+#  "adolescente":[15],
+#  "adulto":[30],
+#  "mayor":[70]
+# }
+
+
+# 3. PATRÓN
+# Clase con diccionario de listas.
+#
+# Se utiliza:
+# - __init__ para crear la estructura de datos.
+# - if/elif para clasificar edades.
+# - *edades para recibir varios valores.
+# - diccionario para almacenar categorías.
+# - listas para guardar las edades de cada grupo.
+# - append() para agregar edades.
+# - items() para recorrer información.
+# - sum() y len() para calcular promedio.
+
+
+# 4. CÓDIGO
+
+class AgrupadorEdades:
+
+    def __init__(self):
+        self.grupos = {}
+
+    def clasificar_edad(self, edad):
+
+        if edad < 12:
+            return "niño"
+
+        elif edad < 18:
+            return "adolescente"
+
+        elif edad < 60:
+            return "adulto"
+
+        else:
+            return "mayor"
+
+
+    def agrupar_por_categoria(self, *edades):
+
+        for edad in edades:
+
+            categoria = self.clasificar_edad(edad)
+
+            if categoria not in self.grupos:
+                self.grupos[categoria] = []
+
+            self.grupos[categoria].append(edad)
+
+        return self.grupos
+
+
+    def edad_promedio_categoria(self, categoria):
+
+        edades = self.grupos[categoria]
+
+        return sum(edades) / len(edades)
+
+
+ae = AgrupadorEdades()
+
+print(ae.agrupar_por_categoria(5, 15, 30, 70))
+
+print(ae.edad_promedio_categoria("adulto"))
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# ae.agrupar_por_categoria(5,15,30,70)
+#
+# Inicio:
+# self.grupos = {}
+#
+# Paso 1:
+# edad = 5
+#
+# clasificar_edad(5)
+#
+# 5 < 12 -> True
+#
+# categoría = "niño"
+#
+# Se crea la lista:
+# self.grupos = {
+#    "niño":[]
+# }
+#
+# Se agrega:
+# self.grupos = {
+#    "niño":[5]
+# }
+#
+#
+# Paso 2:
+# edad = 15
+#
+# 12 <= 15 < 18
+#
+# categoría = "adolescente"
+#
+# Se agrega:
+# {
+#  "niño":[5],
+#  "adolescente":[15]
+# }
+#
+#
+# Paso 3:
+# edad = 30
+#
+# 18 <= 30 < 60
+#
+# categoría = "adulto"
+#
+# Se agrega:
+# {
+#  "niño":[5],
+#  "adolescente":[15],
+#  "adulto":[30]
+# }
+#
+#
+# Paso 4:
+# edad = 70
+#
+# 70 >= 60
+#
+# categoría = "mayor"
+#
+# Resultado final:
+# {
+#  "niño":[5],
+#  "adolescente":[15],
+#  "adulto":[30],
+#  "mayor":[70]
+# }
+#
+#
+# Cálculo del promedio adulto:
+#
+# categoría = "adulto"
+#
+# edades = [30]
+#
+# suma = 30
+# cantidad = 1
+#
+# promedio = 30 / 1
+#
+# Resultado:
+# 30
