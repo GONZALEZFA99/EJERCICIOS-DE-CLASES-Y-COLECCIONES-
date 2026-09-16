@@ -1,0 +1,231 @@
+# EJERCICIO 15 - DIVISORES DE UN NÚMERO
+# Clase DivisorFinder que: (1) tenga método encontrar_divisores(numero)
+# que retorne una tupla con todos los divisores;
+# (2) tenga método es_perfecto(numero) que retorne True si la suma
+# de sus divisores (excepto él mismo) es igual al número;
+# (3) tenga método encontrar_multiples_divisores(*numeros)
+# que retorne un diccionario {número: tupla_divisores}.
+#
+# ENTRADA:
+# Uno o varios números.
+#
+# PROCESO:
+# Recorrer los números desde 1 hasta el número recibido.
+# Comprobar cuáles dividen exactamente al número.
+# Guardar los divisores en una lista y convertirla en tupla.
+# Verificar si un número es perfecto sumando sus divisores
+# excepto el mismo número.
+#
+# SALIDA:
+# Tupla con los divisores.
+# Valor booleano True o False.
+# Diccionario con número y sus divisores.
+#
+# Ejemplo de entrada:
+# df = DivisorFinder()
+# df.encontrar_divisores(12)
+#
+# Salida esperada:
+# (1, 2, 3, 4, 6, 12)
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Uno o varios números.
+#
+# PROCESO:
+# Para encontrar los divisores se recorre desde 1 hasta
+# el número recibido.
+#
+# Si el número dividido para el contador tiene residuo 0,
+# significa que es divisor.
+#
+# Los divisores encontrados se guardan en una lista
+# y luego se convierten en una tupla.
+#
+# Para saber si es perfecto:
+# se suman todos los divisores excepto el mismo número
+# y se compara con el número original.
+#
+# SALIDA:
+# Una tupla con los divisores encontrados.
+# True o False indicando si es perfecto.
+# Un diccionario con varios números y sus divisores.
+
+
+# 2. BOSQUEJO A MANO
+# numero = 12
+#
+# Crear lista:
+# divisores = []
+#
+# Recorrer:
+#
+# 1:
+# 12 % 1 == 0
+# agregar 1
+#
+# 2:
+# 12 % 2 == 0
+# agregar 2
+#
+# 3:
+# 12 % 3 == 0
+# agregar 3
+#
+# 4:
+# 12 % 4 == 0
+# agregar 4
+#
+# 5:
+# 12 % 5 != 0
+# no agregar
+#
+# 6:
+# 12 % 6 == 0
+# agregar 6
+#
+# 12:
+# 12 % 12 == 0
+# agregar 12
+#
+# Lista:
+# [1,2,3,4,6,12]
+#
+# Convertir a tupla:
+# (1,2,3,4,6,12)
+
+
+# 3. PATRÓN
+# Clase con métodos para realizar cálculos.
+# Se utiliza:
+# - métodos para separar responsabilidades.
+# - for para recorrer posibles divisores.
+# - if para validar divisibilidad.
+# - append() para guardar divisores.
+# - tuple() para convertir lista a tupla.
+# - diccionario para almacenar varios resultados.
+# - *args para recibir varios números.
+# - sum() para verificar números perfectos.
+
+
+# 4. CÓDIGO
+
+class DivisorFinder:
+
+    def encontrar_divisores(self, numero):
+        divisores = []
+
+        for i in range(1, numero + 1):
+            if numero % i == 0:
+                divisores.append(i)
+
+        return tuple(divisores)
+
+
+    def es_perfecto(self, numero):
+        divisores = self.encontrar_divisores(numero)
+
+        suma = 0
+
+        for divisor in divisores:
+            if divisor != numero:
+                suma += divisor
+
+        return suma == numero
+
+
+    def encontrar_multiples_divisores(self, *numeros):
+        resultado = {}
+
+        for numero in numeros:
+            resultado[numero] = self.encontrar_divisores(numero)
+
+        return resultado
+
+
+df = DivisorFinder()
+
+print(df.encontrar_divisores(12))
+print(df.es_perfecto(6))
+print(df.encontrar_multiples_divisores(6, 12, 15))
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# df.encontrar_divisores(12)
+#
+# Inicio:
+# divisores = []
+#
+# Paso 1:
+# i = 1
+# 12 % 1 == 0
+# Se agrega:
+# divisores = [1]
+#
+# Paso 2:
+# i = 2
+# 12 % 2 == 0
+# Se agrega:
+# divisores = [1,2]
+#
+# Paso 3:
+# i = 3
+# 12 % 3 == 0
+# Se agrega:
+# divisores = [1,2,3]
+#
+# Paso 4:
+# i = 4
+# 12 % 4 == 0
+# Se agrega:
+# divisores = [1,2,3,4]
+#
+# Paso 5:
+# i = 5
+# 12 % 5 != 0
+# No se agrega.
+#
+# Paso 6:
+# i = 6
+# 12 % 6 == 0
+# Se agrega:
+# divisores = [1,2,3,4,6]
+#
+# Paso 7:
+# i = 12
+# 12 % 12 == 0
+# Se agrega:
+# divisores = [1,2,3,4,6,12]
+#
+# Resultado:
+# (1,2,3,4,6,12)
+#
+#
+# Prueba de número perfecto:
+#
+# numero = 6
+#
+# Divisores:
+# (1,2,3,6)
+#
+# Se excluye el mismo número:
+# 1 + 2 + 3 = 6
+#
+# Como la suma es igual al número:
+# Resultado:
+# True
+#
+#
+# Prueba de múltiples divisores:
+#
+# Entrada:
+# (6,12,15)
+#
+# Resultado:
+# {
+# 6: (1,2,3,6),
+# 12: (1,2,3,4,6,12),
+# 15: (1,3,5,15)
+# }
