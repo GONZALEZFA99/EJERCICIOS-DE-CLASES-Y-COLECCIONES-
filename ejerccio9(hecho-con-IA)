@@ -1,0 +1,165 @@
+# EJERCICIO 9 - VALIDADOR DE CARACTERES
+# Clase AnalizadorString que: (1) tenga método solo_vocales(letra)
+# que retorne True si es vocal; (2) tenga método contar_por_tipo(texto)
+# que retorne un diccionario {'vocales': cant, 'consonantes': cant,
+# 'digitos': cant} reutilizando métodos; (3) tenga atributo que guarde
+# el texto más largo analizado.
+# ENTRADA:
+# Textos para analizar.
+# PROCESO:
+# Recorrer carácter a carácter y clasificar cada carácter
+# como vocal, consonante o dígito.
+# Reutilizar el método solo_vocales() para identificar
+# las vocales.
+# Guardar el texto más largo analizado.
+# SALIDA:
+# Un diccionario con la cantidad de vocales, consonantes
+# y dígitos.
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Un texto recibido mediante contar_por_tipo(texto).
+# PROCESO:
+# Recorrer cada carácter del texto.
+# Comprobar si el carácter es una vocal.
+# Si no es vocal, comprobar si es un dígito.
+# Si no es vocal ni dígito, se considera consonante.
+# También se debe comparar el texto actual con el texto
+# más largo almacenado y actualizarlo si corresponde.
+# SALIDA:
+# Un diccionario con tres cantidades:
+# vocales, consonantes y dígitos.
+# Ejemplo de entrada:
+# astr = AnalizadorString()
+# astr.contar_por_tipo("Hola123")
+#
+# Salida esperada:
+# {'vocales': 2, 'consonantes': 2, 'digitos': 3}
+
+
+# 2. BOSQUEJO A MANO
+# texto = "Hola123"
+# Recorrer cada carácter:
+#   H -> consonante
+#   o -> vocal
+#   l -> consonante
+#   a -> vocal
+#   1 -> dígito
+#   2 -> dígito
+#   3 -> dígito
+# Contadores:
+#   vocales = 2
+#   consonantes = 2
+#   digitos = 3
+# Resultado:
+# {'vocales': 2, 'consonantes': 2, 'digitos': 3}
+#
+# Guardar el texto más largo analizado:
+#   si el texto actual es más largo que el almacenado,
+#   guardar el texto actual.
+
+# 3. PATRÓN
+# Clase con atributo para guardar el texto más largo.
+# Se utiliza:
+# - __init__ para crear el atributo texto_mas_largo.
+# - un método solo_vocales() para identificar vocales.
+# - for para recorrer cada carácter.
+# - un diccionario para guardar los contadores.
+# - reutilización del método solo_vocales().
+# - isdigit() para identificar dígitos.
+# - len() para comparar la longitud de los textos.
+# - if para clasificar los caracteres.
+
+# 4. CÓDIGO
+
+class AnalizadorString:
+    def __init__(self):
+        self.texto_mas_largo = ""
+
+    def solo_vocales(self, letra):
+        return letra.lower() in "aeiou"
+
+    def contar_por_tipo(self, texto):
+        resultado = {
+            "vocales": 0,
+            "consonantes": 0,
+            "digitos": 0
+        }
+
+        for letra in texto:
+            if self.solo_vocales(letra):
+                resultado["vocales"] += 1
+            elif letra.isdigit():
+                resultado["digitos"] += 1
+            else:
+                resultado["consonantes"] += 1
+
+        if len(texto) > len(self.texto_mas_largo):
+            self.texto_mas_largo = texto
+
+        return resultado
+
+
+astr = AnalizadorString()
+
+print(astr.contar_por_tipo("Hola123"))
+print(astr.texto_mas_largo)
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# astr.contar_por_tipo("Hola123")
+# Inicio:
+# self.texto_mas_largo = ""
+#
+# Se crea el diccionario:
+# resultado = {
+#     "vocales": 0,
+#     "consonantes": 0,
+#     "digitos": 0
+# }
+# Paso 1:
+# letra = "H"
+# solo_vocales("H") -> False
+# "H" no es dígito.
+# Se considera consonante.
+# consonantes = 1
+# Paso 2:
+# letra = "o"
+# solo_vocales("o") -> True
+# Se cuenta como vocal.
+# vocales = 1
+# Paso 3:
+# letra = "l"
+# solo_vocales("l") -> False
+# "l" no es dígito.
+# Se considera consonante.
+# consonantes = 2
+# Paso 4:
+# letra = "a"
+# solo_vocales("a") -> True
+# Se cuenta como vocal.
+# vocales = 2
+# Paso 5:
+# letra = "1"
+# solo_vocales("1") -> False
+# "1" es dígito.
+# digitos = 1
+# Paso 6:
+# letra = "2"
+# "2" es dígito.
+# digitos = 2
+# Paso 7:
+# letra = "3"
+# "3" es dígito.
+# digitos = 3
+# Diccionario final:
+# {'vocales': 2, 'consonantes': 2, 'digitos': 3}
+# Para el texto más largo:
+# texto = "Hola123"
+# longitud = 7
+# texto_mas_largo = ""
+# 7 > 0 -> True
+# Se guarda "Hola123".
+# Resultado final:
+# {'vocales': 2, 'consonantes': 2, 'digitos': 3}
+# Hola123
