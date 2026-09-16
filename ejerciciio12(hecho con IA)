@@ -1,0 +1,143 @@
+# EJERCICIO 12 - SELECTOR DE RANGO CON TUPLAS
+# Clase SelectorRango que: (1) tenga método crear_rango(inicio, fin)
+# que retorne una tupla con números en ese rango;
+# (2) tenga método elementos_en_multiples_rangos(*rangos)
+# que reciba múltiples tuplas (inicio, fin) y retorne una lista
+# combinada sin duplicados usando un conjunto.
+#
+# ENTRADA:
+# Pares (inicio, fin) para varios rangos.
+#
+# PROCESO:
+# Crear rangos como tuplas.
+# Recibir varios rangos mediante *rangos.
+# Unir los elementos de todos los rangos usando un conjunto
+# para eliminar valores repetidos.
+#
+# SALIDA:
+# Lista de elementos únicos.
+#
+# Ejemplo de entrada:
+# sr = SelectorRango()
+# sr.elementos_en_multiples_rangos((1,3), (2,4))
+#
+# Salida esperada:
+# [1, 2, 3, 4]
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Pares de números inicio y fin recibidos como tuplas.
+#
+# PROCESO:
+# Crear una tupla con los números que pertenecen al rango.
+# Recibir varios rangos utilizando *rangos.
+# Recorrer cada rango y unir sus elementos en un conjunto
+# para evitar valores repetidos.
+# Finalmente convertir el conjunto en una lista.
+#
+# SALIDA:
+# Una lista con todos los elementos únicos de los rangos.
+
+
+# 2. BOSQUEJO A MANO
+# rango = (1,3)
+#
+# Crear rango:
+#   inicio = 1
+#   fin = 3
+#
+# Resultado:
+#   (1,2,3)
+#
+# Múltiples rangos:
+#   (1,3)
+#   (2,4)
+#
+# Unir elementos:
+#   rango 1 -> 1,2,3
+#   rango 2 -> 2,3,4
+#
+# Usar conjunto:
+#   {1,2,3,4}
+#
+# Convertir a lista:
+#   [1,2,3,4]
+
+
+# 3. PATRÓN
+# Clase que trabaja con tuplas y conjuntos.
+# Se utiliza:
+# - un método para crear rangos.
+# - tuplas para recibir pares de inicio y fin.
+# - *rangos para recibir varios rangos.
+# - range() para generar números.
+# - set() para eliminar duplicados.
+# - add() para agregar elementos al conjunto.
+# - list() para convertir el resultado final.
+
+
+# 4. CÓDIGO
+
+class SelectorRango:
+
+    def crear_rango(self, inicio, fin):
+        return tuple(range(inicio, fin + 1))
+
+    def elementos_en_multiples_rangos(self, *rangos):
+        elementos = set()
+
+        for rango in rangos:
+            numeros = self.crear_rango(rango[0], rango[1])
+
+            for numero in numeros:
+                elementos.add(numero)
+
+        return list(elementos)
+
+
+sr = SelectorRango()
+
+print(sr.crear_rango(1, 3))
+print(sr.elementos_en_multiples_rangos((1, 3), (2, 4)))
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# sr.elementos_en_multiples_rangos((1,3), (2,4))
+#
+# Inicio:
+# elementos = set()
+#
+# Paso 1:
+# Primer rango:
+# (1,3)
+#
+# Se ejecuta crear_rango(1,3)
+#
+# range genera:
+# 1,2,3
+#
+# Se agregan al conjunto:
+# elementos = {1,2,3}
+#
+# Paso 2:
+# Segundo rango:
+# (2,4)
+#
+# Se ejecuta crear_rango(2,4)
+#
+# range genera:
+# 2,3,4
+#
+# Se agregan al conjunto:
+# elementos = {1,2,3,4}
+#
+# Los valores repetidos no se agregan porque
+# el conjunto no permite duplicados.
+#
+# Paso 3:
+# Se convierte el conjunto en lista.
+#
+# Resultado final:
+# [1,2,3,4]
