@@ -1,0 +1,191 @@
+# EJERCICIO 10 - GESTOR DE TAREAS CON PRIORIDAD
+# Clase Tareas que: (1) tenga método agregar_tarea(descripcion, prioridad)
+# que guarde en una lista de tuplas (descripción, prioridad);
+# (2) tenga método tareas_prioritarias() que retorne solo las de prioridad alta;
+# (3) tenga método eliminar_completada(descripcion) que borre la tarea de la lista.
+#
+# ENTRADA:
+# Descripciones y prioridades de las tareas.
+#
+# PROCESO:
+# Guardar cada tarea como una tupla dentro de una lista.
+# Filtrar las tareas cuya prioridad sea "alta".
+# Eliminar de la lista la tarea que coincida con la descripción.
+#
+# SALIDA:
+# Lista con las tareas de prioridad alta.
+#
+# Ejemplo de entrada:
+# t = Tareas()
+# t.agregar_tarea("Estudiar", "alta")
+# t.agregar_tarea("Leer", "baja")
+# t.tareas_prioritarias()
+#
+# Salida esperada:
+# [("Estudiar", "alta")]
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Descripciones y prioridades de las tareas.
+#
+# PROCESO:
+# Guardar cada tarea en una lista como una tupla
+# formada por descripción y prioridad.
+# Recorrer la lista para encontrar las tareas
+# que tengan prioridad "alta".
+# También se debe poder eliminar una tarea
+# buscando su descripción.
+#
+# SALIDA:
+# Una lista con las tareas de prioridad alta.
+
+
+# 2. BOSQUEJO A MANO
+# tareas = []
+#
+# Agregar tarea:
+#   ("Estudiar", "alta")
+#   tareas = [("Estudiar", "alta")]
+#
+# Agregar otra tarea:
+#   ("Leer", "baja")
+#   tareas = [("Estudiar", "alta"), ("Leer", "baja")]
+#
+# Para tareas_prioritarias():
+#   recorrer cada tarea
+#   comprobar si prioridad == "alta"
+#   agregar la tarea a una lista
+#
+# Resultado:
+# [("Estudiar", "alta")]
+#
+# Para eliminar_completada("Estudiar"):
+#   recorrer la lista
+#   buscar la tarea cuya descripción sea "Estudiar"
+#   eliminarla de la lista.
+
+
+# 3. PATRÓN
+# Clase con una lista de tuplas para almacenar tareas.
+# Se utiliza:
+# - __init__ para crear la lista de tareas.
+# - un método para agregar tareas.
+# - tuplas para guardar descripción y prioridad.
+# - append() para agregar tareas a la lista.
+# - for para recorrer las tareas.
+# - if para filtrar las tareas de prioridad alta.
+# - remove() para eliminar una tarea.
+# - comparación de la descripción para encontrar
+#   la tarea que se desea eliminar.
+
+
+# 4. CÓDIGO
+
+class Tareas:
+    def __init__(self):
+        self.tareas = []
+
+    def agregar_tarea(self, descripcion, prioridad):
+        self.tareas.append((descripcion, prioridad))
+
+    def tareas_prioritarias(self):
+        resultado = []
+        for tarea in self.tareas:
+            if tarea[1] == "alta":
+                resultado.append(tarea)
+        return resultado
+
+    def eliminar_completada(self, descripcion):
+        for tarea in self.tareas:
+            if tarea[0] == descripcion:
+                self.tareas.remove(tarea)
+                break
+
+
+t = Tareas()
+
+t.agregar_tarea("Estudiar", "alta")
+t.agregar_tarea("Leer", "baja")
+t.agregar_tarea("Programar", "alta")
+
+print(t.tareas_prioritarias())
+
+t.eliminar_completada("Estudiar")
+
+print(t.tareas_prioritarias())
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# t.agregar_tarea("Estudiar", "alta")
+# t.agregar_tarea("Leer", "baja")
+# t.agregar_tarea("Programar", "alta")
+#
+# Inicio:
+# self.tareas = []
+#
+# Paso 1:
+# Se agrega la tarea "Estudiar" con prioridad "alta".
+# self.tareas = [("Estudiar", "alta")]
+#
+# Paso 2:
+# Se agrega la tarea "Leer" con prioridad "baja".
+# self.tareas = [
+#     ("Estudiar", "alta"),
+#     ("Leer", "baja")
+# ]
+#
+# Paso 3:
+# Se agrega la tarea "Programar" con prioridad "alta".
+# self.tareas = [
+#     ("Estudiar", "alta"),
+#     ("Leer", "baja"),
+#     ("Programar", "alta")
+# ]
+#
+# Paso 4:
+# Se ejecuta tareas_prioritarias().
+#
+# Primera tarea:
+# ("Estudiar", "alta")
+# prioridad = "alta" -> True
+# Se agrega al resultado.
+#
+# resultado = [("Estudiar", "alta")]
+#
+# Segunda tarea:
+# ("Leer", "baja")
+# prioridad = "baja" -> False
+# No se agrega.
+#
+# Tercera tarea:
+# ("Programar", "alta")
+# prioridad = "alta" -> True
+# Se agrega al resultado.
+#
+# Resultado:
+# [("Estudiar", "alta"), ("Programar", "alta")]
+#
+# Paso 5:
+# Se ejecuta eliminar_completada("Estudiar").
+#
+# Se recorre la lista buscando la descripción "Estudiar".
+# Se encuentra:
+# ("Estudiar", "alta")
+#
+# Se elimina de la lista.
+#
+# self.tareas = [
+#     ("Leer", "baja"),
+#     ("Programar", "alta")
+# ]
+#
+# Se vuelve a ejecutar tareas_prioritarias().
+#
+# Resultado:
+# [("Programar", "alta")]
+#
+# Resultado final:
+# [("Estudiar", "alta"), ("Programar", "alta")]
+# [("Programar", "alta")]
