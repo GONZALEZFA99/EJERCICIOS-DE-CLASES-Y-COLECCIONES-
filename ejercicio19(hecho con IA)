@@ -1,0 +1,212 @@
+# EJERCICIO 19 - INVENTARIO DE PRODUCTOS
+# Clase Inventario que: (1) tenga método agregar_stock(producto, cantidad)
+# que guarde en un diccionario; (2) tenga método restar_stock(producto,
+# cantidad) que disminuya y retorne True si hay suficiente;
+# (3) tenga método productos_bajo_stock(minimo) que retorne una lista
+# de productos con cantidad < minimo.
+#
+# ENTRADA:
+# Productos y cantidades.
+#
+# PROCESO:
+# Guardar y actualizar productos dentro de un diccionario.
+# Validar si existe suficiente stock antes de restar.
+# Recorrer productos para encontrar los que tengan
+# cantidad menor al mínimo indicado.
+#
+# SALIDA:
+# True o False al restar stock.
+# Lista de productos con bajo stock.
+#
+# Ejemplo de entrada:
+# inv = Inventario()
+# inv.agregar_stock("pan", 50)
+# inv.restar_stock("pan", 30)
+# inv.productos_bajo_stock(15)
+#
+# Salida esperada:
+# True
+# ["pan"]
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Nombre del producto y cantidad de unidades.
+#
+# PROCESO:
+# Al agregar stock, guardar el producto como clave
+# y la cantidad como valor dentro del diccionario.
+#
+# Al restar stock:
+# comprobar si existe el producto y si tiene
+# suficiente cantidad.
+#
+# Si existe suficiente stock, disminuir la cantidad
+# y retornar True.
+# Caso contrario retornar False.
+#
+# Para productos bajo stock:
+# recorrer el diccionario y comparar cantidades
+# con el mínimo indicado.
+#
+# SALIDA:
+# Estado de la operación y productos con poco stock.
+
+
+# 2. BOSQUEJO A MANO
+# inventario = {}
+#
+# Agregar:
+# producto = "pan"
+# cantidad = 50
+#
+# inventario:
+# {"pan":50}
+#
+# Restar:
+# producto = "pan"
+# cantidad = 30
+#
+# 50 >= 30
+# se puede restar.
+#
+# inventario:
+# {"pan":20}
+#
+# Revisar bajo stock:
+# minimo = 15
+#
+# pan = 20
+# 20 < 15 -> False
+#
+# Resultado:
+# []
+
+
+# 3. PATRÓN
+# Clase con diccionario como almacenamiento de datos.
+#
+# Se utiliza:
+# - __init__ para crear el diccionario.
+# - diccionario clave-valor para guardar productos.
+# - if para validar existencia y cantidad.
+# - actualización de valores del diccionario.
+# - items() para recorrer productos.
+# - lista para guardar productos filtrados.
+# - append() para agregar productos.
+
+
+# 4. CÓDIGO
+
+class Inventario:
+
+    def __init__(self):
+        self.productos = {}
+
+    def agregar_stock(self, producto, cantidad):
+
+        if producto in self.productos:
+            self.productos[producto] += cantidad
+        else:
+            self.productos[producto] = cantidad
+
+
+    def restar_stock(self, producto, cantidad):
+
+        if producto in self.productos:
+
+            if self.productos[producto] >= cantidad:
+                self.productos[producto] -= cantidad
+                return True
+
+        return False
+
+
+    def productos_bajo_stock(self, minimo):
+
+        resultado = []
+
+        for producto, cantidad in self.productos.items():
+
+            if cantidad < minimo:
+                resultado.append(producto)
+
+        return resultado
+
+
+inv = Inventario()
+
+inv.agregar_stock("pan", 50)
+
+print(inv.restar_stock("pan", 30))
+
+print(inv.productos_bajo_stock(15))
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# inv.agregar_stock("pan",50)
+# inv.restar_stock("pan",30)
+#
+# Inicio:
+# self.productos = {}
+#
+# Paso 1:
+# producto = "pan"
+# cantidad = 50
+#
+# El producto no existe.
+# Se crea en el diccionario:
+#
+# self.productos = {
+#     "pan":50
+# }
+#
+#
+# Paso 2:
+# Restar stock:
+#
+# producto = "pan"
+# cantidad = 30
+#
+# Se verifica:
+#
+# "pan" existe -> True
+#
+# 50 >= 30 -> True
+#
+# Se resta:
+#
+# 50 - 30 = 20
+#
+# self.productos =
+# {
+#     "pan":20
+# }
+#
+# Retorna:
+# True
+#
+#
+# Paso 3:
+# productos_bajo_stock(15)
+#
+# Se recorre el diccionario:
+#
+# producto = "pan"
+# cantidad = 20
+#
+# 20 < 15 -> False
+#
+# No se agrega a la lista.
+#
+# Resultado:
+# []
+#
+#
+# Si el mínimo fuera 25:
+#
+# 20 < 25 -> True
+#
+# Resultado:
+# ["pan"]
