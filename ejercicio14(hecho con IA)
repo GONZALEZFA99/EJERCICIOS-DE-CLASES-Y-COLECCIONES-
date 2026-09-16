@@ -1,0 +1,198 @@
+# EJERCICIO 14 - MAPEO DE ESTUDIANTES A NOTAS
+# Clase RegistroNotas que: (1) tenga método registrar(estudiante, nota)
+# que guarde en un diccionario; (2) tenga método estudiantes_aprobados(nota_minima)
+# que retorne lista de estudiantes; (3) tenga método mejor_estudiante()
+# que retorne nombre y nota del que tiene mayor calificación.
+#
+# ENTRADA:
+# Estudiante → nota.
+#
+# PROCESO:
+# Guardar estudiantes y notas en un diccionario.
+# Recorrer el diccionario utilizando items().
+# Comparar las notas para encontrar la mayor calificación.
+#
+# SALIDA:
+# Lista de estudiantes aprobados.
+# Tupla con nombre y nota del mejor estudiante.
+#
+# Ejemplo de entrada:
+# rn = RegistroNotas()
+# rn.registrar("Ana", 95)
+# rn.registrar("Bob", 70)
+# rn.mejor_estudiante()
+#
+# Salida esperada:
+# ("Ana", 95)
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Nombres de estudiantes y sus respectivas notas.
+# Una nota mínima para determinar aprobados.
+#
+# PROCESO:
+# Guardar cada estudiante como clave y su nota como valor
+# dentro de un diccionario.
+#
+# Recorrer el diccionario con items() para obtener
+# estudiante y nota.
+#
+# Comparar las notas para encontrar la calificación más alta.
+#
+# SALIDA:
+# Una lista con los estudiantes que cumplen la nota mínima.
+# Una tupla con el estudiante que tiene la mayor nota
+# y su calificación.
+
+
+# 2. BOSQUEJO A MANO
+# notas = {}
+#
+# Registrar:
+#   "Ana" -> 95
+#   "Bob" -> 70
+#
+# Diccionario:
+# {
+#   "Ana": 95,
+#   "Bob": 70
+# }
+#
+# Para estudiantes_aprobados(80):
+#   recorrer estudiante y nota
+#   si nota >= 80:
+#       agregar estudiante a la lista
+#
+# Resultado:
+# ["Ana"]
+#
+# Para mejor_estudiante():
+#   comparar todas las notas
+#
+# Ana = 95
+# Bob = 70
+#
+# Mayor:
+# ("Ana", 95)
+
+
+# 3. PATRÓN
+# Clase con diccionario para almacenar información.
+# Se utiliza:
+# - __init__ para crear el diccionario.
+# - un método para registrar estudiantes.
+# - diccionario clave-valor.
+# - items() para recorrer estudiante y nota.
+# - lista para guardar estudiantes aprobados.
+# - if para comparar notas.
+# - variables para almacenar la mayor nota.
+# - tupla para retornar nombre y calificación.
+
+
+# 4. CÓDIGO
+
+class RegistroNotas:
+    def __init__(self):
+        self.notas = {}
+
+    def registrar(self, estudiante, nota):
+        self.notas[estudiante] = nota
+
+    def estudiantes_aprobados(self, nota_minima):
+        aprobados = []
+
+        for estudiante, nota in self.notas.items():
+            if nota >= nota_minima:
+                aprobados.append(estudiante)
+
+        return aprobados
+
+    def mejor_estudiante(self):
+        mayor = 0
+        estudiante_mayor = None
+
+        for estudiante, nota in self.notas.items():
+            if nota > mayor:
+                mayor = nota
+                estudiante_mayor = estudiante
+
+        return (estudiante_mayor, mayor)
+
+
+rn = RegistroNotas()
+
+rn.registrar("Ana", 95)
+rn.registrar("Bob", 70)
+
+print(rn.estudiantes_aprobados(80))
+print(rn.mejor_estudiante())
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# rn.registrar("Ana", 95)
+# rn.registrar("Bob", 70)
+#
+# Inicio:
+# self.notas = {}
+#
+# Paso 1:
+# estudiante = "Ana"
+# nota = 95
+#
+# Se guarda en el diccionario:
+# self.notas = {"Ana": 95}
+#
+# Paso 2:
+# estudiante = "Bob"
+# nota = 70
+#
+# Se guarda:
+# self.notas = {
+#     "Ana": 95,
+#     "Bob": 70
+# }
+#
+# Paso 3:
+# Se ejecuta estudiantes_aprobados(80)
+#
+# Primer recorrido:
+# estudiante = "Ana"
+# nota = 95
+#
+# 95 >= 80 -> True
+# Se agrega:
+# aprobados = ["Ana"]
+#
+# Segundo recorrido:
+# estudiante = "Bob"
+# nota = 70
+#
+# 70 >= 80 -> False
+# No se agrega.
+#
+# Resultado:
+# ["Ana"]
+#
+# Paso 4:
+# Se ejecuta mejor_estudiante()
+#
+# Inicio:
+# mayor = 0
+#
+# Ana:
+# nota = 95
+# 95 > 0 -> True
+#
+# estudiante_mayor = "Ana"
+# mayor = 95
+#
+# Bob:
+# nota = 70
+# 70 > 95 -> False
+#
+# No cambia el resultado.
+#
+# Resultado final:
+# ("Ana", 95)
