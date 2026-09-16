@@ -1,0 +1,136 @@
+# EJERCICIO 6 - ESTADÍSTICAS DE TEMPERATURA
+# Clase GestorTemperatura que: (1) tenga método registrar_temperatura(temp)
+# que guarde en una lista; (2) tenga métodos minima(), maxima(), promedio()
+# que calculen estadísticas; (3) tenga método registrar_multiples(*temps)
+# que reutilice el registro para varias temperaturas.
+# ENTRADA:
+# Temperaturas individuales o en lote.
+# PROCESO:
+# Guardar las temperaturas en una lista y calcular
+# la mínima, máxima y promedio.
+# SALIDA:
+# Valores estadísticos de las temperaturas.
+# Ejemplo de entrada:
+# gt = GestorTemperatura()
+# gt.registrar_multiples(20, 25, 18, 30)
+# gt.promedio()
+# Salida esperada:
+# 23.25
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Temperaturas individuales o varias temperaturas recibidas mediante *temps.
+# PROCESO:
+# Registrar cada temperatura en una lista interna.
+# Luego buscar la temperatura mínima y máxima.
+# Para calcular el promedio se suman las temperaturas
+# y se dividen para la cantidad de temperaturas almacenadas.
+# SALIDA:
+# La temperatura mínima.
+# La temperatura máxima.
+# El promedio de las temperaturas.
+# Ejemplo de entrada:
+# gt = GestorTemperatura()
+# gt.registrar_multiples(20, 25, 18, 30)
+# gt.promedio()
+# Salida esperada:
+# 23.25
+# 2. BOSQUEJO A MANO
+# temperaturas = [20, 25, 18, 30]
+# Un solo recorrido para registrar las temperaturas:
+#   recibir cada temperatura
+#   agregarla a la lista
+# Al final:
+#   lista = [20, 25, 18, 30]
+# Para la mínima:
+#   buscar el valor menor
+#   obtener 18
+# Para la máxima:
+#   buscar el valor mayor
+#   obtener 30
+# Para el promedio:
+#   sumar las temperaturas
+#   dividir la suma para la cantidad de temperaturas
+#   obtener 23.25
+# 3. PATRÓN
+# Clase con lista interna para almacenar temperaturas.
+# Se utiliza:
+# - __init__ para crear la lista de temperaturas.
+# - un método para registrar una temperatura.
+# - *temps para recibir varias temperaturas.
+# - un recorrido for para registrar cada temperatura.
+# - append() para guardar las temperaturas.
+# - min() para obtener la temperatura mínima.
+# - max() para obtener la temperatura máxima.
+# - sum() y len() para calcular el promedio.
+# - reutilización del método registrar_temperatura()
+#   dentro de registrar_multiples().
+# 4. CÓDIGO
+class GestorTemperatura:
+    def __init__(self):
+        self.temperaturas = []
+
+    def registrar_temperatura(self, temp):
+        self.temperaturas.append(temp)
+
+    def minima(self):
+        return min(self.temperaturas)
+
+    def maxima(self):
+        return max(self.temperaturas)
+
+    def promedio(self):
+        return sum(self.temperaturas) / len(self.temperaturas)
+
+    def registrar_multiples(self, *temps):
+        for temp in temps:
+            self.registrar_temperatura(temp)
+
+gt = GestorTemperatura()
+
+print(gt.registrar_temperatura(20))
+print(gt.registrar_multiples(25, 18, 30))
+print(gt.minima())
+print(gt.maxima())
+print(gt.promedio())
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# gt.registrar_temperatura(20)
+# gt.registrar_multiples(25, 18, 30)
+#
+# Inicio:
+# self.temperaturas = []
+# Paso 1:
+# temp = 20
+# Se registra la temperatura.
+# self.temperaturas = [20]
+# Paso 2:
+# registrar_multiples(25, 18, 30)
+# recibe tres temperaturas.
+# temp = 25
+# Se registra la temperatura.
+# self.temperaturas = [20, 25]
+# temp = 18
+# Se registra la temperatura.
+# self.temperaturas = [20, 25, 18]
+# temp = 30
+# Se registra la temperatura.
+# self.temperaturas = [20, 25, 18, 30]
+# Lista final:
+# [20, 25, 18, 30]
+# Para calcular la mínima:
+# minima() busca el valor menor.
+# mínima = 18
+# Para calcular la máxima:
+# maxima() busca el valor mayor.
+# máxima = 30
+# Para calcular el promedio:
+# suma = 20 + 25 + 18 + 30
+# suma = 93
+# cantidad de temperaturas = 4
+# promedio = 93 / 4
+# promedio = 23.25
+# Resultado final:
+# 18
+# 30
+# 23.25
