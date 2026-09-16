@@ -1,0 +1,128 @@
+# EJERCICIO 7 - MAPeADOR DE EDADES
+# Clase GestorPersonas que: (1) tenga método agregar_persona(nombre, edad)
+# que guarde en un diccionario; (2) tenga método personas_mayores(edad_minima)
+# que retorne una lista de nombres cuya edad sea >= edad_minima;
+# (3) tenga método edad_promedio() que retorne el promedio de edades.
+# ENTRADA:
+# Nombres y edades.
+# PROCESO:
+# Guardar las personas en un diccionario, filtrar las personas
+# mayores y calcular el promedio de edades.
+# SALIDA:
+# Lista de personas que cumplen la edad mínima y promedio de edades.
+# Ejemplo de entrada:
+# gp = GestorPersonas()
+# gp.agregar_persona("Ana", 28)
+# gp.agregar_persona("Bob", 17)
+# gp.personas_mayores(18)
+# Salida esperada:
+# ["Ana"]
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Nombres y edades de las personas.
+# Una edad mínima para realizar el filtro.
+# PROCESO:
+# Guardar cada persona en un diccionario donde el nombre
+# sea la clave y la edad sea el valor.
+# Recorrer el diccionario usando items() para encontrar
+# las personas cuya edad sea mayor o igual a la edad mínima.
+# Para calcular el promedio se suman las edades y se dividen
+# para la cantidad de personas almacenadas.
+# SALIDA:
+# Una lista con los nombres de las personas que cumplen
+# con la edad mínima.
+# El promedio de las edades.
+# 2. BOSQUEJO A MANO
+# personas = {}
+# Agregar personas:
+#   "Ana" -> 28
+#   "Bob" -> 17
+# Diccionario:
+#   {"Ana": 28, "Bob": 17}
+# Para personas_mayores(18):
+#   recorrer nombre y edad
+#   si edad >= 18, agregar el nombre a la lista
+# Resultado:
+#   ["Ana"]
+# Para edad_promedio():
+#   sumar las edades
+#   dividir la suma para la cantidad de personas
+#   obtener el promedio
+# 3. PATRÓN
+# Clase con diccionario interno para almacenar personas.
+# Se utiliza:
+# - __init__ para crear el diccionario.
+# - un método para agregar personas.
+# - diccionario para guardar nombre y edad.
+# - items() para recorrer nombre y edad.
+# - una lista para guardar los nombres que cumplen
+#   con la edad mínima.
+# - if para filtrar las personas.
+# - sum() y len() para calcular el promedio.
+# 4. CÓDIGO
+class GestorPersonas:
+    def __init__(self):
+        self.personas = {}
+
+    def agregar_persona(self, nombre, edad):
+        self.personas[nombre] = edad
+
+    def personas_mayores(self, edad_minima):
+        resultado = []
+        for nombre, edad in self.personas.items():
+            if edad >= edad_minima:
+                resultado.append(nombre)
+        return resultado
+
+    def edad_promedio(self):
+        return sum(self.personas.values()) / len(self.personas)
+        
+gp = GestorPersonas()
+
+gp.agregar_persona("Ana", 28)
+gp.agregar_persona("Bob", 17)
+
+print(gp.personas_mayores(18))
+print(gp.edad_promedio())
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# gp.agregar_persona("Ana", 28)
+# gp.agregar_persona("Bob", 17)
+# Inicio:
+# self.personas = {}
+# Paso 1:
+# nombre = "Ana"
+# edad = 28
+# Se agrega al diccionario.
+# self.personas = {"Ana": 28}
+# Paso 2:
+# nombre = "Bob"
+# edad = 17
+# Se agrega al diccionario.
+# self.personas = {"Ana": 28, "Bob": 17}
+# Paso 3:
+# Se ejecuta personas_mayores(18).
+#
+# Se recorre el diccionario usando items().
+# nombre = "Ana"
+# edad = 28
+# 28 >= 18 -> True
+# Se agrega "Ana" a la lista.
+# resultado = ["Ana"]
+# nombre = "Bob"
+# edad = 17
+# 17 >= 18 -> False
+# No se agrega.
+# Resultado:
+# ["Ana"]
+# Paso 4:
+# Se ejecuta edad_promedio().
+# suma = 28 + 17
+# suma = 45
+# cantidad de personas = 2
+# promedio = 45 / 2
+# promedio = 22.5
+# Resultado final:
+# ["Ana"]
+# 22.5
