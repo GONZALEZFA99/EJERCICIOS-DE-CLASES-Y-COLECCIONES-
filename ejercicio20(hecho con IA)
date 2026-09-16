@@ -1,0 +1,263 @@
+# EJERCICIO 20 - ANALIZADOR DE PATRONES EN TEXTOS
+# Clase AnalizadorPatrones que: (1) tenga método encontrar_palabras(texto, patron)
+# que busque palabras que inicien con el patrón y retorne una lista;
+# (2) tenga método agrupar_por_longitud(texto) que retorne un diccionario
+# {longitud: [palabras]}; (3) tenga método palabras_unicas() usando un conjunto.
+#
+# ENTRADA:
+# Texto y patrón de búsqueda.
+#
+# PROCESO:
+# Separar el texto utilizando split().
+# Buscar palabras que comiencen con el patrón.
+# Agrupar palabras según su longitud.
+# Utilizar un conjunto para eliminar palabras repetidas.
+#
+# SALIDA:
+# Lista de palabras encontradas.
+# Diccionario agrupado por longitud.
+# Conjunto de palabras únicas.
+#
+# Ejemplo de entrada:
+# ap = AnalizadorPatrones()
+# ap.agrupar_por_longitud("el gato está aquí")
+#
+# Salida esperada:
+# {
+# 2:["el"],
+# 4:["gato"],
+# 5:["está", "aquí"]
+# }
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Un texto y un patrón de búsqueda.
+#
+# PROCESO:
+# Convertir el texto en una lista de palabras usando split().
+#
+# Para encontrar palabras:
+# recorrer cada palabra y verificar si comienza
+# con el patrón usando startswith().
+#
+# Para agrupar:
+# recorrer las palabras y guardarlas en un diccionario
+# donde la clave sea la longitud y el valor sea una lista.
+#
+# Para palabras únicas:
+# utilizar un conjunto para eliminar duplicados.
+#
+# SALIDA:
+# Lista de palabras que coinciden con el patrón.
+# Diccionario con palabras agrupadas por longitud.
+# Conjunto de palabras sin repetición.
+
+
+# 2. BOSQUEJO A MANO
+# texto = "el gato está aquí"
+#
+# Separar:
+#
+# palabras = [
+#   "el",
+#   "gato",
+#   "está",
+#   "aquí"
+# ]
+#
+#
+# Agrupar por longitud:
+#
+# "el"
+# longitud = 2
+#
+# grupos:
+# {
+#   2:["el"]
+# }
+#
+# "gato"
+# longitud = 4
+#
+# grupos:
+# {
+#   2:["el"],
+#   4:["gato"]
+# }
+#
+# "está"
+# longitud = 4
+#
+# "aquí"
+# longitud = 4
+#
+# Resultado:
+# {
+#   2:["el"],
+#   4:["gato","está","aquí"]
+# }
+
+
+# 3. PATRÓN
+# Clase que trabaja con procesamiento de textos.
+#
+# Se utiliza:
+# - __init__ para crear un conjunto de palabras.
+# - split() para separar el texto.
+# - startswith() para buscar patrones.
+# - len() para obtener longitud de palabras.
+# - diccionario para agrupar información.
+# - lista para almacenar palabras.
+# - set() para eliminar duplicados.
+# - add() para agregar elementos únicos.
+
+
+# 4. CÓDIGO
+
+class AnalizadorPatrones:
+
+    def __init__(self):
+        self.unicas = set()
+
+
+    def encontrar_palabras(self, texto, patron):
+
+        resultado = []
+
+        palabras = texto.split()
+
+        for palabra in palabras:
+
+            if palabra.startswith(patron):
+                resultado.append(palabra)
+
+            self.unicas.add(palabra)
+
+        return resultado
+
+
+    def agrupar_por_longitud(self, texto):
+
+        grupos = {}
+
+        palabras = texto.split()
+
+        for palabra in palabras:
+
+            longitud = len(palabra)
+
+            if longitud not in grupos:
+                grupos[longitud] = []
+
+            grupos[longitud].append(palabra)
+
+            self.unicas.add(palabra)
+
+        return grupos
+
+
+    def palabras_unicas(self):
+
+        return self.unicas
+
+
+
+ap = AnalizadorPatrones()
+
+print(ap.encontrar_palabras("casa carro perro camino", "ca"))
+
+print(ap.agrupar_por_longitud("el gato está aquí"))
+
+print(ap.palabras_unicas())
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# ap.agrupar_por_longitud("el gato está aquí")
+#
+# Inicio:
+# grupos = {}
+#
+# Paso 1:
+# palabra = "el"
+#
+# longitud:
+# len("el") = 2
+#
+# No existe la clave 2.
+# Se crea:
+#
+# grupos = {
+#    2:["el"]
+# }
+#
+#
+# Paso 2:
+# palabra = "gato"
+#
+# longitud:
+# len("gato") = 4
+#
+# Se crea:
+#
+# grupos = {
+#    2:["el"],
+#    4:["gato"]
+# }
+#
+#
+# Paso 3:
+# palabra = "está"
+#
+# longitud:
+# len("está") = 4
+#
+# La clave 4 ya existe.
+# Se agrega:
+#
+# grupos =
+# {
+#    2:["el"],
+#    4:["gato","está"]
+# }
+#
+#
+# Paso 4:
+# palabra = "aquí"
+#
+# longitud:
+# len("aquí") = 4
+#
+# Se agrega:
+#
+# grupos =
+# {
+#    2:["el"],
+#    4:["gato","está","aquí"]
+# }
+#
+#
+# Resultado final:
+#
+# {
+# 2:["el"],
+# 4:["gato","está","aquí"]
+# }
+#
+#
+# Prueba de encontrar_palabras:
+#
+# texto:
+# "casa carro perro camino"
+#
+# patrón:
+# "ca"
+#
+# casa empieza con "ca" -> agregar
+# carro empieza con "ca" -> agregar
+# perro no coincide
+# camino empieza con "ca" -> agregar
+#
+# Resultado:
+# ["casa","carro","camino"]
