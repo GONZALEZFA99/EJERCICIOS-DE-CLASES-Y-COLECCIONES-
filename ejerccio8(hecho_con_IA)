@@ -1,0 +1,165 @@
+# EJERCICIO 8 - ASIGNADOR DE EQUIPOS
+# Clase Equipos que: (1) tenga método crear_equipo(nombre_equipo)
+# que inicie un equipo como una lista vacía en un diccionario;
+# (2) tenga método agregar_jugador(equipo, jugador) que añada
+# el jugador al equipo; (3) tenga método equipo_mayor_integrantes()
+# que retorne el nombre del equipo con más jugadores.
+# ENTRADA:
+# Nombres de equipos y jugadores.
+# PROCESO:
+# Crear una estructura equipo -> [jugadores].
+# Agregar jugadores a cada equipo.
+# Contar los jugadores de cada equipo y comparar
+# para encontrar el equipo con mayor cantidad.
+# SALIDA:
+# Nombre del equipo con mayor cantidad de jugadores.
+# Ejemplo de entrada:
+# eq = Equipos()
+# eq.crear_equipo("A")
+# eq.agregar_jugador("A", "Juan")
+# eq.agregar_jugador("A", "Pedro")
+# Salida esperada:
+# Equipo A
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Nombres de equipos y nombres de jugadores.
+#
+# PROCESO:
+# Crear cada equipo dentro de un diccionario.
+# Cada equipo tendrá una lista vacía para almacenar
+# sus jugadores.
+# Luego se agregan los jugadores al equipo correspondiente.
+# Finalmente se recorren los equipos para comparar
+# la cantidad de jugadores y encontrar el equipo con más
+# integrantes.
+#
+# SALIDA:
+# El nombre del equipo que tenga mayor cantidad de jugadores.
+
+# 2. BOSQUEJO A MANO
+# equipos = {}
+# Crear equipo:
+#   crear equipo "A"
+#   equipos = {"A": []}
+# Agregar jugadores:
+#   agregar "Juan" al equipo "A"
+#   equipos = {"A": ["Juan"]}
+#   agregar "Pedro" al equipo "A"
+#   equipos = {"A": ["Juan", "Pedro"]}
+# Crear otro equipo:
+#   equipos = {
+#       "A": ["Juan", "Pedro"],
+#       "B": []
+#   }
+# Recorrer los equipos:
+#   contar jugadores de cada equipo
+#   comparar cantidades
+#   guardar el equipo con más jugadores
+#
+# Al final:
+#   retornar el nombre del equipo con más integrantes.
+
+# 3. PATRÓN
+# Clase con diccionario de listas.
+# Se utiliza:
+# - __init__ para crear el diccionario de equipos.
+# - un método para crear equipos.
+# - una lista vacía para almacenar los jugadores.
+# - append() para agregar jugadores.
+# - items() para recorrer los equipos y sus jugadores.
+# - len() para contar los jugadores.
+# - if para comparar la cantidad de integrantes.
+
+# 4. CÓDIGO
+
+class Equipos:
+    def __init__(self):
+        self.equipos = {}
+
+    def crear_equipo(self, nombre_equipo):
+        self.equipos[nombre_equipo] = []
+
+    def agregar_jugador(self, equipo, jugador):
+        self.equipos[equipo].append(jugador)
+
+    def equipo_mayor_integrantes(self):
+        mayor = 0
+        equipo_mayor = None
+
+        for equipo, jugadores in self.equipos.items():
+            if len(jugadores) > mayor:
+                mayor = len(jugadores)
+                equipo_mayor = equipo
+
+        return equipo_mayor
+
+
+eq = Equipos()
+
+eq.crear_equipo("A")
+eq.crear_equipo("B")
+
+eq.agregar_jugador("A", "Juan")
+eq.agregar_jugador("A", "Pedro")
+
+eq.agregar_jugador("B", "Luis")
+
+print(eq.equipo_mayor_integrantes())
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# eq.crear_equipo("A")
+# eq.crear_equipo("B")
+# eq.agregar_jugador("A", "Juan")
+# eq.agregar_jugador("A", "Pedro")
+# eq.agregar_jugador("B", "Luis")
+# Inicio:
+# self.equipos = {}
+# Paso 1:
+# Se crea el equipo "A".
+# self.equipos = {"A": []}
+# Paso 2:
+# Se crea el equipo "B".
+# self.equipos = {
+#     "A": [],
+#     "B": []
+# }
+# Paso 3:
+# Se agrega "Juan" al equipo "A".
+# self.equipos = {
+#     "A": ["Juan"],
+#     "B": []
+# }
+# Paso 4:
+# Se agrega "Pedro" al equipo "A".
+# self.equipos = {
+#     "A": ["Juan", "Pedro"],
+#     "B": []
+# }
+# Paso 5:
+# Se agrega "Luis" al equipo "B".
+# self.equipos = {
+#     "A": ["Juan", "Pedro"],
+#     "B": ["Luis"]
+# }
+# Paso 6:
+# Se ejecuta equipo_mayor_integrantes().
+# Primer equipo:
+# equipo = "A"
+# jugadores = ["Juan", "Pedro"]
+# cantidad = 2
+# 2 > 0 -> True
+# equipo_mayor = "A"
+# mayor = 2
+# Segundo equipo:
+# equipo = "B"
+# jugadores = ["Luis"]
+# cantidad = 1
+# 1 > 2 -> False
+# No se cambia el equipo mayor.
+# Resultado final:
+# Equipo con mayor cantidad de integrantes = "A"
+# Salida:
+# A
