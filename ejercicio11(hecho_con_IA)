@@ -1,0 +1,154 @@
+# EJERCICIO 11 - CONTADOR DE FRECUENCIA
+# Clase ContadorFrecuencia que: (1) tenga método agregar_elemento(elemento)
+# que guarde en un diccionario contando repeticiones; (2) tenga método
+# elemento_mas_frecuente() que retorne el elemento con mayor frecuencia;
+# (3) tenga método frecuencia_elemento(elemento) que retorne cuántas veces aparece.
+# ENTRADA:
+# Elementos individuales.
+# PROCESO:
+# Guardar cada elemento en un diccionario y contar cuántas veces
+# se repite.
+# Encontrar el elemento que tenga la mayor frecuencia.
+# SALIDA:
+# El elemento más frecuente y su cantidad de repeticiones.
+# Ejemplo de entrada:
+# cf = ContadorFrecuencia()
+# cf.agregar_elemento("a")
+# cf.agregar_elemento("b")
+# cf.agregar_elemento("a")
+# cf.elemento_mas_frecuente()
+#
+# Salida esperada:
+# "a"
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Elementos que se agregan uno por uno.
+# PROCESO:
+# Guardar los elementos en un diccionario.
+# Si el elemento no existe, iniciar su contador en 1.
+# Si ya existe, aumentar su contador.
+# Luego recorrer el diccionario para encontrar
+# el elemento que tenga mayor frecuencia.
+# SALIDA:
+# El elemento que más veces se repite.
+# También se puede consultar la frecuencia
+# de un elemento específico.
+
+
+# 2. BOSQUEJO A MANO
+# frecuencias = {}
+# Agregar "a":
+#   "a" no existe
+#   frecuencias = {"a": 1}
+# Agregar "b":
+#   "b" no existe
+#   frecuencias = {"a": 1, "b": 1}
+# Agregar "a":
+#   "a" ya existe
+#   aumentar su contador
+#   frecuencias = {"a": 2, "b": 1}
+# Buscar elemento más frecuente:
+#   comparar las frecuencias
+#   "a" = 2
+#   "b" = 1
+#   mayor = "a"
+# Resultado:
+# "a"
+
+
+# 3. PATRÓN
+# Clase con diccionario como contador.
+# Se utiliza:
+# - __init__ para crear el diccionario.
+# - un método para agregar elementos.
+# - diccionario para guardar elemento y frecuencia.
+# - if para comprobar si el elemento ya existe.
+# - for para recorrer el diccionario.
+# - items() para obtener elemento y frecuencia.
+# - una variable para guardar la mayor frecuencia.
+# - un método para consultar la frecuencia de un elemento.
+
+
+# 4. CÓDIGO
+
+class ContadorFrecuencia:
+    def __init__(self):
+        self.frecuencias = {}
+
+    def agregar_elemento(self, elemento):
+        if elemento in self.frecuencias:
+            self.frecuencias[elemento] += 1
+        else:
+            self.frecuencias[elemento] = 1
+
+    def elemento_mas_frecuente(self):
+        mayor = 0
+        elemento_mayor = None
+
+        for elemento, frecuencia in self.frecuencias.items():
+            if frecuencia > mayor:
+                mayor = frecuencia
+                elemento_mayor = elemento
+
+        return elemento_mayor
+
+    def frecuencia_elemento(self, elemento):
+        return self.frecuencias.get(elemento, 0)
+
+
+cf = ContadorFrecuencia()
+
+cf.agregar_elemento("a")
+cf.agregar_elemento("b")
+cf.agregar_elemento("a")
+
+print(cf.elemento_mas_frecuente())
+print(cf.frecuencia_elemento("a"))
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# cf.agregar_elemento("a")
+# cf.agregar_elemento("b")
+# cf.agregar_elemento("a")
+# Inicio:
+# self.frecuencias = {}
+# Paso 1:
+# elemento = "a"
+# "a" no existe en el diccionario.
+# Se crea con frecuencia 1.
+# self.frecuencias = {"a": 1}
+# Paso 2:
+# elemento = "b"
+# "b" no existe en el diccionario.
+# Se crea con frecuencia 1.
+# self.frecuencias = {"a": 1, "b": 1}
+#
+# Paso 3:
+# elemento = "a"
+# "a" ya existe en el diccionario.
+# Se aumenta su frecuencia.
+# self.frecuencias = {"a": 2, "b": 1}
+# Paso 4:
+# Se ejecuta elemento_mas_frecuente().
+# Primer elemento:
+# elemento = "a"
+# frecuencia = 2
+# 2 > 0 -> True
+# elemento_mayor = "a"
+# mayor = 2
+# Segundo elemento:
+# elemento = "b"
+# frecuencia = 1
+# 1 > 2 -> False
+# No se cambia el elemento mayor.
+# Resultado:
+# "a"
+# Paso 5:
+# Se ejecuta frecuencia_elemento("a").
+# Se busca "a" en el diccionario.
+# frecuencia de "a" = 2
+# Resultado final:
+# "a"
+# 2
