@@ -1,0 +1,211 @@
+# EJERCICIO 18 - MATRIZ DE DISTANCIAS
+# Clase CalculadorDistancia que: (1) tenga método distancia_euclidiana(p1, p2)
+# que reciba dos tuplas (x,y) y calcule la distancia;
+# (2) tenga método punto_mas_cercano(referencia, *puntos)
+# que retorne el punto más cercano a referencia;
+# (3) tenga un atributo lista para guardar todas las distancias calculadas.
+#
+# ENTRADA:
+# Tuplas (x,y) como puntos.
+#
+# PROCESO:
+# Calcular la distancia entre puntos utilizando la fórmula
+# de distancia euclidiana.
+# Comparar las distancias obtenidas para encontrar el punto
+# más cercano.
+# Guardar cada distancia calculada en una lista.
+#
+# SALIDA:
+# Distancia numérica.
+# Punto más cercano a una referencia.
+#
+# Ejemplo de entrada:
+# cd = CalculadorDistancia()
+# cd.distancia_euclidiana((0,0), (3,4))
+#
+# Salida esperada:
+# 5.0
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Dos puntos representados como tuplas:
+# (x,y)
+#
+# PROCESO:
+# Obtener las coordenadas de cada punto.
+# Aplicar la fórmula:
+#
+# distancia = raíz cuadrada de:
+# (x2-x1)^2 + (y2-y1)^2
+#
+# Guardar cada distancia calculada en una lista.
+#
+# Para encontrar el punto más cercano:
+# calcular la distancia entre la referencia y cada punto.
+# Comparar las distancias y guardar la menor.
+#
+# SALIDA:
+# Distancia entre dos puntos.
+# Punto con menor distancia.
+
+
+# 2. BOSQUEJO A MANO
+# p1 = (0,0)
+# p2 = (3,4)
+#
+# Separar coordenadas:
+#
+# x1 = 0
+# y1 = 0
+#
+# x2 = 3
+# y2 = 4
+#
+# Calcular:
+#
+# distancia = √((3-0)^2 + (4-0)^2)
+#
+# distancia = √(9 + 16)
+#
+# distancia = √25
+#
+# distancia = 5.0
+#
+# Guardar:
+# distancias = [5.0]
+
+
+# 3. PATRÓN
+# Clase que trabaja con puntos y cálculos matemáticos.
+#
+# Se utiliza:
+# - __init__ para crear la lista de distancias.
+# - tuplas para representar puntos (x,y).
+# - métodos para separar cálculos.
+# - math.sqrt() para calcular raíz cuadrada.
+# - for para recorrer varios puntos.
+# - if para comparar distancias.
+# - lista para almacenar resultados.
+
+
+# 4. CÓDIGO
+
+import math
+
+
+class CalculadorDistancia:
+
+    def __init__(self):
+        self.distancias = []
+
+    def distancia_euclidiana(self, p1, p2):
+
+        x1, y1 = p1
+        x2, y2 = p2
+
+        distancia = math.sqrt(
+            (x2 - x1) ** 2 +
+            (y2 - y1) ** 2
+        )
+
+        self.distancias.append(distancia)
+
+        return distancia
+
+
+    def punto_mas_cercano(self, referencia, *puntos):
+
+        punto_cercano = None
+        menor_distancia = None
+
+        for punto in puntos:
+
+            distancia = self.distancia_euclidiana(
+                referencia,
+                punto
+            )
+
+            if menor_distancia is None or distancia < menor_distancia:
+                menor_distancia = distancia
+                punto_cercano = punto
+
+        return punto_cercano
+
+
+cd = CalculadorDistancia()
+
+print(cd.distancia_euclidiana((0,0), (3,4)))
+
+print(cd.punto_mas_cercano(
+    (0,0),
+    (5,5),
+    (2,1),
+    (10,10)
+))
+
+print(cd.distancias)
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# cd.distancia_euclidiana((0,0),(3,4))
+#
+# Inicio:
+# self.distancias = []
+#
+# Paso 1:
+# p1 = (0,0)
+# p2 = (3,4)
+#
+# Separar valores:
+# x1 = 0
+# y1 = 0
+# x2 = 3
+# y2 = 4
+#
+# Aplicar fórmula:
+#
+# (3-0)^2 + (4-0)^2
+#
+# 3^2 + 4^2
+#
+# 9 + 16 = 25
+#
+# raíz de 25:
+# 5.0
+#
+# Se guarda:
+#
+# self.distancias = [5.0]
+#
+# Resultado:
+# 5.0
+#
+#
+# Prueba punto_mas_cercano:
+#
+# referencia = (0,0)
+#
+# puntos:
+# (5,5)
+# (2,1)
+# (10,10)
+#
+# Punto 1:
+# distancia a (5,5)
+# = 7.07 aproximadamente
+#
+# Punto 2:
+# distancia a (2,1)
+# = 2.23 aproximadamente
+#
+# Punto 3:
+# distancia a (10,10)
+# = 14.14 aproximadamente
+#
+# Menor distancia:
+# 2.23
+#
+# Punto más cercano:
+# (2,1)
