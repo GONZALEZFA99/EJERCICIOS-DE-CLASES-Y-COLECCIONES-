@@ -1,0 +1,170 @@
+# EJERCICIO 13 - COMBINADOR DE LISTAS
+# Clase CombinadorListas que: (1) tenga método intercalar(lista1, lista2)
+# que retorne una lista alternando elementos de ambas;
+# (2) tenga método intercalar_multiples(*listas) que reutilice
+# para varias listas.
+#
+# ENTRADA:
+# Dos o más listas.
+#
+# PROCESO:
+# Recorrer las listas utilizando índices.
+# Tomar un elemento de cada lista y agregarlo
+# alternativamente al resultado.
+# Reutilizar el método intercalar() para combinar
+# varias listas.
+#
+# SALIDA:
+# Una lista con los elementos intercalados.
+#
+# Ejemplo de entrada:
+# cl = CombinadorListas()
+# cl.intercalar([1,2], [3,4])
+#
+# Salida esperada:
+# [1,3,2,4]
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Dos o más listas con elementos.
+#
+# PROCESO:
+# Recorrer las listas usando posiciones o índices.
+# Tomar el primer elemento de la primera lista,
+# luego el primero de la segunda lista y continuar
+# alternando elementos.
+#
+# Si una lista tiene más elementos que otra,
+# agregar los elementos restantes.
+#
+# SALIDA:
+# Una nueva lista con los elementos combinados
+# en orden intercalado.
+
+
+# 2. BOSQUEJO A MANO
+# lista1 = [1,2]
+# lista2 = [3,4]
+#
+# Crear lista resultado:
+# resultado = []
+#
+# Índice 0:
+# lista1[0] -> 1
+# lista2[0] -> 3
+# resultado = [1,3]
+#
+# Índice 1:
+# lista1[1] -> 2
+# lista2[1] -> 4
+# resultado = [1,3,2,4]
+#
+# Al final:
+# retornar resultado.
+#
+# Para múltiples listas:
+# usar intercalar() varias veces.
+
+
+# 3. PATRÓN
+# Clase que trabaja con listas e índices.
+# Se utiliza:
+# - __init__ si se necesita almacenar información.
+# - for para recorrer posiciones.
+# - range() para controlar los índices.
+# - len() para conocer el tamaño de las listas.
+# - append() para agregar elementos.
+# - reutilización de métodos dentro de la misma clase.
+
+
+# 4. CÓDIGO
+
+class CombinadorListas:
+
+    def intercalar(self, lista1, lista2):
+        resultado = []
+
+        mayor = max(len(lista1), len(lista2))
+
+        for i in range(mayor):
+
+            if i < len(lista1):
+                resultado.append(lista1[i])
+
+            if i < len(lista2):
+                resultado.append(lista2[i])
+
+        return resultado
+
+
+    def intercalar_multiples(self, *listas):
+        resultado = listas[0]
+
+        for lista in listas[1:]:
+            resultado = self.intercalar(resultado, lista)
+
+        return resultado
+
+
+cl = CombinadorListas()
+
+print(cl.intercalar([1,2], [3,4]))
+
+print(cl.intercalar_multiples([1,2], [3,4], [5,6]))
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# cl.intercalar([1,2], [3,4])
+#
+# Inicio:
+# resultado = []
+#
+# lista1 = [1,2]
+# lista2 = [3,4]
+#
+# Paso 1:
+# i = 0
+#
+# lista1[0] = 1
+# Se agrega:
+# resultado = [1]
+#
+# lista2[0] = 3
+# Se agrega:
+# resultado = [1,3]
+#
+# Paso 2:
+# i = 1
+#
+# lista1[1] = 2
+# Se agrega:
+# resultado = [1,3,2]
+#
+# lista2[1] = 4
+# Se agrega:
+# resultado = [1,3,2,4]
+#
+# Resultado final:
+# [1,3,2,4]
+#
+#
+# Prueba con múltiples listas:
+#
+# listas:
+# [1,2]
+# [3,4]
+# [5,6]
+#
+# Primero:
+# intercalar([1,2],[3,4])
+#
+# Resultado:
+# [1,3,2,4]
+#
+# Luego:
+# intercalar([1,3,2,4],[5,6])
+#
+# Resultado final:
+# [1,5,3,6,2,4]
