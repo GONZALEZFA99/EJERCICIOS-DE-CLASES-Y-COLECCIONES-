@@ -1,0 +1,165 @@
+# EJERCICIO 16 - CODIFICADOR / DECODIFICADOR CESAR
+# Clase CodificadorCesar que: (1) tenga método codificar_letra(letra, desplazamiento)
+# que retorne la letra desplazada en el alfabeto usando operador %;
+# (2) tenga método codificar_palabra(palabra, desplazamiento) que reutilice
+# el método para cada letra; (3) tenga un diccionario como atributo para
+# historial de codificaciones.
+#
+# ENTRADA:
+# Una letra o palabra y un desplazamiento entre 1 y 25.
+#
+# PROCESO:
+# Convertir caracteres a código ASCII usando ord().
+# Aplicar desplazamiento utilizando % para mantener
+# el rango del alfabeto.
+# Convertir nuevamente a letra usando chr().
+# Guardar cada codificación en un diccionario.
+#
+# SALIDA:
+# Palabra codificada y registro del historial.
+#
+# Ejemplo de entrada:
+# cc = CodificadorCesar()
+# cc.codificar_palabra("hola", 3)
+#
+# Salida esperada:
+# "krod"
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Una palabra y un número de desplazamiento.
+#
+# PROCESO:
+# Recorrer cada letra de la palabra.
+# Convertir la letra a un número usando ord().
+# Sumar el desplazamiento.
+# Utilizar % 26 para regresar al inicio del alfabeto
+# cuando se llegue a la letra z.
+# Convertir nuevamente el número a letra con chr().
+#
+# Guardar la palabra original y su resultado en un
+# diccionario de historial.
+#
+# SALIDA:
+# La palabra codificada.
+
+
+# 2. BOSQUEJO A MANO
+# palabra = "hola"
+# desplazamiento = 3
+#
+# Procesar letra por letra:
+#
+# h -> k
+# o -> r
+# l -> o
+# a -> d
+#
+# Resultado:
+# "krod"
+#
+# Guardar historial:
+#
+# {
+#   "hola": "krod"
+# }
+
+
+# 3. PATRÓN
+# Clase con atributo diccionario para guardar información.
+#
+# Se utiliza:
+# - __init__ para crear el historial.
+# - ord() para convertir letras en códigos ASCII.
+# - chr() para convertir códigos en letras.
+# - operador % para mantener el desplazamiento dentro
+#   del alfabeto.
+# - for para recorrer la palabra.
+# - reutilización del método codificar_letra().
+# - diccionario para guardar las codificaciones.
+
+
+# 4. CÓDIGO
+
+class CodificadorCesar:
+
+    def __init__(self):
+        self.historial = {}
+
+    def codificar_letra(self, letra, desplazamiento):
+        codigo = ord(letra)
+
+        nuevo_codigo = ((codigo - ord('a') + desplazamiento) % 26) + ord('a')
+
+        return chr(nuevo_codigo)
+
+    def codificar_palabra(self, palabra, desplazamiento):
+        resultado = ""
+
+        for letra in palabra:
+            resultado += self.codificar_letra(letra, desplazamiento)
+
+        self.historial[palabra] = resultado
+
+        return resultado
+
+
+cc = CodificadorCesar()
+
+print(cc.codificar_palabra("hola", 3))
+print(cc.historial)
+
+
+# 5. PRUEBA PASO A PASO
+# Entrada:
+# cc.codificar_palabra("hola", 3)
+#
+# Inicio:
+# self.historial = {}
+#
+# Paso 1:
+# letra = "h"
+#
+# ord("h") = 104
+#
+# Se aplica desplazamiento:
+# h + 3 = k
+#
+# resultado = "k"
+#
+# Paso 2:
+# letra = "o"
+#
+# o + 3 = r
+#
+# resultado = "kr"
+#
+# Paso 3:
+# letra = "l"
+#
+# l + 3 = o
+#
+# resultado = "kro"
+#
+# Paso 4:
+# letra = "a"
+#
+# a + 3 = d
+#
+# resultado = "krod"
+#
+# Paso 5:
+# Se guarda en el historial:
+#
+# self.historial = {
+#     "hola": "krod"
+# }
+#
+# Resultado final:
+#
+# palabra codificada:
+# "krod"
+#
+# historial:
+# {"hola": "krod"}
