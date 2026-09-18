@@ -1,0 +1,111 @@
+# EJERCICIO 1.1 - CLASE EDADES
+# Clase Edades que:
+# 1. Tenga un atributo interno tipo lista llamado _lista.
+# 2. Tenga un método validar_edad(edad) que retorne True si la edad está entre 0 y 120,
+#    y False en caso contrario.
+# 3. Tenga un método cargar_edades(*args) que reciba varias edades,
+#    valide cada una y guarde solo las válidas en la lista interna.
+# 4. Tenga un método promedio() que retorne el promedio de las edades almacenadas.
+# 5. Si no hay edades guardadas, promedio() debe retornar 0.
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# e = Edades()
+# e.cargar_edades(15, 25, -3, 40, 150, 35)
+# e.promedio()
+#
+# PROCESO:
+# Validar cada edad.
+# Guardar solamente las edades válidas en la lista interna _lista.
+# Calcular el promedio de las edades almacenadas.
+# Si no hay edades almacenadas, retornar 0.
+#
+# SALIDA:
+# [15, 25, 40, 35]
+# 28.75
+
+
+# 2. BOSQUEJO A MANO
+# Clase Edades
+#     _lista = []
+#
+#     validar_edad(edad)
+#         Si edad >= 0 y edad <= 120
+#             retornar True
+#         Si no
+#             retornar False
+#
+#     cargar_edades(*args)
+#         Para cada edad
+#             Si la edad es válida
+#                 guardar edad en _lista
+#         retornar _lista
+#
+#     promedio()
+#         Si _lista está vacía
+#             retornar 0
+#         retornar suma de _lista / cantidad de edades
+
+
+# 3. PATRÓN
+# Lista para almacenar las edades.
+# Validación mediante un método.
+# Uso de *args para recibir varias edades.
+# Uso de sum() para sumar las edades.
+# Uso de len() para conocer la cantidad de edades.
+
+
+# 4. CÓDIGO
+
+class Edades:
+    def __init__(self):
+        self._lista = []
+
+    def validar_edad(self, edad):
+        if edad >= 0 and edad <= 120:
+            return True
+        else:
+            return False
+
+    def cargar_edades(self, *args):
+        for edad in args:
+            if self.validar_edad(edad):
+                self._lista.append(edad)
+        return self._lista
+
+    def promedio(self):
+        if len(self._lista) == 0:
+            return 0
+        return sum(self._lista) / len(self._lista)
+
+
+e = Edades()
+
+print(e.cargar_edades(15, 25, -3, 40, 150, 35))
+
+print(e.promedio())
+# 5. PRUEBA PASO A PASO
+# Se crea un objeto e de la clase Edades.
+
+# Se cargan las edades:
+# 15, 25, -3, 40, 150, 35
+#
+# Se valida cada edad:
+# 15 -> válida -> se guarda.
+# 25 -> válida -> se guarda.
+# -3 -> inválida -> no se guarda.
+# 40 -> válida -> se guarda.
+# 150 -> inválida -> no se guarda.
+# 35 -> válida -> se guarda.
+#
+# La lista final queda:
+# [15, 25, 40, 35]
+#
+# Para calcular el promedio:
+# 15 + 25 + 40 + 35 = 115
+# 115 / 4 = 28.75
+#
+# SALIDA ESPERADA:
+# [15, 25, 40, 35]
+# 28.75
