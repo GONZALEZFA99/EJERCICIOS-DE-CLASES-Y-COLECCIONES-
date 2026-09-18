@@ -1,0 +1,100 @@
+# EJERCICIO 2.1 -REGISTROPRODUCTOS
+# Clase RegistroProductos que:
+# 1. Tenga un método agregar_producto(producto) que agregue el producto
+#    a un conjunto para evitar duplicados y también a una lista para conservar el orden.
+# 2. Tenga un método contar_productos() que retorne cuántos productos únicos hay.
+# 3. Tenga un método agregar_varios(*args) que reciba varios productos
+#    y reutilice agregar_producto().
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# r = RegistroProductos()
+# r.agregar_varios("pan", "leche", "pan", "arroz", "leche")
+# r.contar_productos()
+#
+# PROCESO:
+# Guardar los productos en un conjunto para evitar duplicados.
+# Guardar los productos en una lista para conservar el orden.
+# Contar la cantidad de productos únicos.
+#
+# SALIDA:
+# 3
+
+
+# 2. BOSQUEJO A MANO
+# Clase RegistroProductos
+#     _palabras = set()
+#     _lista = []
+#
+#     agregar_producto(producto)
+#         Si producto no está en el conjunto
+#             agregar producto al conjunto
+#             agregar producto a la lista
+#
+#     contar_productos()
+#         retornar cantidad de elementos del conjunto
+#
+#     agregar_varios(*args)
+#         Para cada producto
+#             utilizar agregar_producto()
+
+
+# 3. PATRÓN
+# Conjunto (set) para evitar productos duplicados.
+# Lista para conservar el orden de los productos.
+# Uso de *args para recibir varios productos.
+# Reutilización del método agregar_producto().
+# Uso de len() para contar los productos únicos.
+
+
+# 4. CÓDIGO
+
+class RegistroProductos:
+    def __init__(self):
+        self._palabras = set()
+        self._lista = []
+
+    def agregar_producto(self, producto):
+        if producto not in self._palabras:
+            self._palabras.add(producto)
+            self._lista.append(producto)
+
+    def contar_productos(self):
+        return len(self._palabras)
+
+    def agregar_varios(self, *args):
+        for producto in args:
+            self.agregar_producto(producto)
+
+
+r = RegistroProductos()
+
+r.agregar_varios("pan", "leche", "pan", "arroz", "leche")
+
+print(r.contar_productos())
+
+
+# 5. PRUEBA PASO A PASO
+# Se crea un objeto r de la clase RegistroProductos.
+#
+# Se agregan los siguientes productos:
+# pan, leche, pan, arroz, leche
+#
+# Se revisa cada producto:
+# pan -> no existe -> se guarda.
+# leche -> no existe -> se guarda.
+# pan -> ya existe -> no se guarda nuevamente.
+# arroz -> no existe -> se guarda.
+# leche -> ya existe -> no se guarda nuevamente.
+#
+# La lista queda:
+# ["pan", "leche", "arroz"]
+#
+# El conjunto también contiene 3 productos únicos.
+#
+# contar_productos() retorna:
+# 3
+#
+# SALIDA ESPERADA:
+# 3
