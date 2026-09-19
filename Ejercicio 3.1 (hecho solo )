@@ -1,0 +1,129 @@
+# EJERCICIO 3.1 - CLASE BIBLIOTECA
+# Clase Biblioteca que:
+# 1. Tenga un método agregar_libro(titulo, paginas)
+#    que guarde los libros en un diccionario con la estructura titulo -> paginas.
+# 2. Tenga un método total_paginas()
+#    que retorne la suma de todas las páginas almacenadas.
+# 3. Tenga un método libros_por_rango(paginas_min, paginas_max)
+#    que retorne una lista con los títulos de los libros
+#    cuya cantidad de páginas esté dentro de ese rango.
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# b = Biblioteca()
+#
+# b.agregar_libro("Python Basico", 150)
+# b.agregar_libro("POO", 220)
+# b.agregar_libro("Algoritmos", 300)
+# b.agregar_libro("Git", 120)
+#
+# print(b.total_paginas())
+# print(b.libros_por_rango(150, 250))
+#
+# PROCESO:
+# Guardar cada libro en un diccionario.
+# El título será la clave y las páginas serán el valor.
+# Sumar todas las páginas de los libros.
+# Buscar los libros que tengan páginas entre el mínimo y el máximo indicado.
+#
+# SALIDA:
+# 790
+# ['Python Basico', 'POO']
+
+
+# 2. BOSQUEJO A MANO
+# Clase Biblioteca
+#     _libros = {}
+#
+#     agregar_libro(titulo, paginas)
+#         guardar titulo y paginas en el diccionario
+#
+#     total_paginas()
+#         sumar todas las páginas
+#         retornar la suma
+#
+#     libros_por_rango(paginas_min, paginas_max)
+#         crear lista resultado
+#         recorrer libros
+#         si paginas >= paginas_min y paginas <= paginas_max
+#             agregar titulo a resultado
+#         retornar resultado
+
+
+# 3. PATRÓN
+# Diccionario para guardar los libros.
+# La clave es el título.
+# El valor es la cantidad de páginas.
+# Uso de values() para obtener las páginas.
+# Uso de items() para recorrer título y páginas.
+# Lista para almacenar los libros que cumplen el rango.
+
+
+# 4. CÓDIGO
+
+class Biblioteca:
+    def __init__(self):
+        self._libros = {}
+
+    def agregar_libro(self, titulo, paginas):
+        self._libros[titulo] = paginas
+
+    def total_paginas(self):
+        return sum(self._libros.values())
+
+    def libros_por_rango(self, paginas_min, paginas_max):
+        resultado = []
+
+        for titulo, paginas in self._libros.items():
+            if paginas >= paginas_min and paginas <= paginas_max:
+                resultado.append(titulo)
+
+        return resultado
+
+
+b = Biblioteca()
+
+b.agregar_libro("Python Basico", 150)
+b.agregar_libro("POO", 220)
+b.agregar_libro("Algoritmos", 300)
+b.agregar_libro("Git", 120)
+
+print(b.total_paginas())
+
+print(b.libros_por_rango(150, 250))
+
+
+# 5. PRUEBA PASO A PASO
+# Se crea un objeto b de la clase Biblioteca.
+#
+# Se agregan los siguientes libros:
+# Python Basico -> 150 páginas
+# POO -> 220 páginas
+# Algoritmos -> 300 páginas
+# Git -> 120 páginas
+#
+# El diccionario queda:
+# {
+#     "Python Basico": 150,
+#     "POO": 220,
+#     "Algoritmos": 300,
+#     "Git": 120
+# }
+#
+# Para calcular el total:
+# 150 + 220 + 300 + 120 = 790
+#
+# Luego se busca el rango entre 150 y 250 páginas.
+#
+# Python Basico -> 150 -> está dentro del rango -> se guarda.
+# POO -> 220 -> está dentro del rango -> se guarda.
+# Algoritmos -> 300 -> no está dentro del rango.
+# Git -> 120 -> no está dentro del rango.
+#
+# La lista final queda:
+# ['Python Basico', 'POO']
+#
+# SALIDA ESPERADA:
+# 790
+# ['Python Basico', 'POO']
