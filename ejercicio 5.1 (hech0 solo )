@@ -1,0 +1,128 @@
+# EJERCICIO 5.1 - CLASE CLASIFICADORNUMEROS
+# Clase ClasificadorNumeros que:
+# 1. Tenga un método es_multiplo_de_tres(numero)
+#    que retorne True si el número es múltiplo de 3
+#    y False en caso contrario.
+# 2. Tenga un método separar(*numeros)
+#    que reciba varios números y retorne un diccionario.
+# 3. El método separar(*numeros) debe reutilizar
+#    es_multiplo_de_tres(numero).
+# 4. Tenga un método cantidad_multiplos_no_multiplos()
+#    que retorne una tupla con la cantidad de múltiplos
+#    y no múltiplos.
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# c = ClasificadorNumeros()
+#
+# c.separar(3, 4, 6, 8, 9, 10)
+#
+# PROCESO:
+# Revisar cada número para saber si es múltiplo de 3.
+# Guardar los múltiplos de 3 en una lista.
+# Guardar los números que no son múltiplos de 3 en otra lista.
+# Contar la cantidad de elementos de cada lista.
+#
+# SALIDA:
+# {'multiplos': [3, 6, 9], 'no_multiplos': [4, 8, 10]}
+# (3, 3)
+
+
+# 2. BOSQUEJO A MANO
+# Clase ClasificadorNumeros
+#     _multiplo_de_3 = []
+#     _no_es_multiplo_de_3 = []
+#
+#     es_multiplo_de_tres(numero)
+#         Si numero % 3 == 0
+#             retornar True
+#         Si no
+#             retornar False
+#
+#     separar(*numeros)
+#         Para cada numero
+#             Si es multiplo de 3
+#                 guardar en _multiplo_de_3
+#             Si no
+#                 guardar en _no_es_multiplo_de_3
+#         retornar diccionario
+#
+#     cantidad_multiplos_no_multiplos()
+#         retornar cantidad de múltiplos
+#         retornar cantidad de no múltiplos
+
+
+# 3. PATRÓN
+# Dos listas para separar los números.
+# Uso del operador % para comprobar si un número es múltiplo de 3.
+# Uso de *numeros para recibir varios números.
+# Reutilización del método es_multiplo_de_tres().
+# Diccionario para retornar las dos listas.
+# Tupla para retornar las cantidades.
+
+
+# 4. CÓDIGO
+
+class ClasificadorNumeros:
+    def __init__(self):
+        self._multiplo_de_3 = []
+        self._no_es_multiplo_de_3 = []
+
+    def es_multiplo_de_tres(self, numero):
+        if numero % 3 == 0:
+            return True
+        else:
+            return False
+
+    def separar(self, *numeros):
+        for numero in numeros:
+            if self.es_multiplo_de_tres(numero):
+                self._multiplo_de_3.append(numero)
+            else:
+                self._no_es_multiplo_de_3.append(numero)
+
+        return {
+            "multiplos": self._multiplo_de_3,
+            "no_multiplos": self._no_es_multiplo_de_3
+        }
+
+    def cantidad_multiplos_no_multiplos(self):
+        return (
+            len(self._multiplo_de_3),
+            len(self._no_es_multiplo_de_3)
+        )
+
+
+c = ClasificadorNumeros()
+
+print(c.separar(3, 4, 6, 8, 9, 10))
+
+print(c.cantidad_multiplos_no_multiplos())
+
+
+# 5. PRUEBA PASO A PASO
+# Se crea un objeto c de la clase ClasificadorNumeros.
+#
+# Se reciben los números:
+# 3, 4, 6, 8, 9, 10
+#
+# Se revisa cada número:
+# 3 -> múltiplo de 3 -> se guarda.
+# 4 -> no es múltiplo de 3 -> se guarda.
+# 6 -> múltiplo de 3 -> se guarda.
+# 8 -> no es múltiplo de 3 -> se guarda.
+# 9 -> múltiplo de 3 -> se guarda.
+# 10 -> no es múltiplo de 3 -> se guarda.
+#
+# La lista de múltiplos queda:
+# [3, 6, 9]
+#
+# La lista de no múltiplos queda:
+# [4, 8, 10]
+#
+# Hay 3 múltiplos y 3 no múltiplos.
+#
+# SALIDA ESPERADA:
+# {'multiplos': [3, 6, 9], 'no_multiplos': [4, 8, 10]}
+# (3, 3)
