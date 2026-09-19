@@ -1,0 +1,124 @@
+# EJERCICIO 6.1 - CLASE GESTORCALIFICACIONES
+# Clase GestorCalificaciones que:
+# 1. Tenga un método registrar_nota(nota)
+#    que guarde las notas recibidas en una lista interna.
+# 2. Tenga un método registrar_multiples(*notas)
+#    que reciba varias notas y reutilice el método registrar_nota()
+#    para guardar cada una.
+# 3. Tenga un método nota_minima()
+#    que retorne la nota más baja utilizando la función min().
+# 4. Tenga un método nota_maxima()
+#    que retorne la nota más alta utilizando la función max().
+# 5. Tenga un método promedio()
+#    que calcule y retorne el promedio de todas las notas almacenadas.
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# g = GestorCalificaciones()
+#
+# g.registrar_multiples(85, 90, 75, 100)
+#
+# PROCESO:
+# Guardar las notas en una lista.
+# Obtener la nota mínima.
+# Obtener la nota máxima.
+# Calcular el promedio de las notas.
+#
+# SALIDA:
+# 75
+# 100
+# 87.5
+
+
+# 2. BOSQUEJO A MANO
+# Clase GestorCalificaciones
+#     _notas = []
+#
+#     registrar_nota(nota)
+#         guardar nota en _notas
+#
+#     registrar_multiples(*notas)
+#         Para cada nota
+#             utilizar registrar_nota()
+#
+#     nota_minima()
+#         retornar la nota mínima usando min()
+#
+#     nota_maxima()
+#         retornar la nota máxima usando max()
+#
+#     promedio()
+#         sumar todas las notas
+#         dividir para la cantidad de notas
+#         retornar resultado
+
+
+# 3. PATRÓN
+# Lista para almacenar las notas.
+# Uso de *notas para recibir varias notas.
+# Reutilización del método registrar_nota().
+# Uso de min() para obtener la nota más baja.
+# Uso de max() para obtener la nota más alta.
+# Uso de sum() y len() para calcular el promedio.
+
+
+# 4. CÓDIGO
+
+class GestorCalificaciones:
+    def __init__(self):
+        self._notas = []
+
+    def registrar_nota(self, nota):
+        self._notas.append(nota)
+
+    def registrar_multiples(self, *notas):
+        for nota in notas:
+            self.registrar_nota(nota)
+
+    def nota_minima(self):
+        return min(self._notas)
+
+    def nota_maxima(self):
+        return max(self._notas)
+
+    def promedio(self):
+        return sum(self._notas) / len(self._notas)
+
+
+g = GestorCalificaciones()
+
+g.registrar_multiples(85, 90, 75, 100)
+
+print(g.nota_minima())
+
+print(g.nota_maxima())
+
+print(g.promedio())
+
+
+# 5. PRUEBA PASO A PASO
+# Se crea un objeto g de la clase GestorCalificaciones.
+#
+# Se registran las notas:
+# 85, 90, 75, 100
+#
+# Cada nota se guarda en la lista _notas.
+#
+# La lista queda:
+# [85, 90, 75, 100]
+#
+# La nota mínima es:
+# 75
+#
+# La nota máxima es:
+# 100
+#
+# Para calcular el promedio:
+# 85 + 90 + 75 + 100 = 350
+# 350 / 4 = 87.5
+#
+# SALIDA ESPERADA:
+# 75
+# 100
+# 87.5
