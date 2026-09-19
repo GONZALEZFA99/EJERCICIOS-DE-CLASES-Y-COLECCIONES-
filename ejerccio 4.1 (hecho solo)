@@ -1,0 +1,142 @@
+# EJERCICIO 4.1 - CLASE INVERTIRNOMBRES
+# Clase InvertirNombres que:
+# 1. Tenga un método invertir_lista(lista)
+#    que reciba una lista de nombres y retorne una nueva lista
+#    con el orden invertido, sin usar reversed().
+# 2. Tenga un método invertir_varias(*listas)
+#    que reciba varias listas de nombres, reutilice el método
+#    invertir_lista() y retorne un diccionario.
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# inv = InvertirNombres()
+#
+# inv.invertir_lista(["Ana", "Luis", "Pedro"])
+#
+# inv.invertir_varias(
+#     ["Ana", "Luis", "Pedro"],
+#     ["Maria", "Jose"],
+#     ["Carlos", "Sofia", "Mateo"]
+# )
+#
+# PROCESO:
+# Recibir una lista de nombres.
+# Recorrer la lista desde el último elemento hasta el primero.
+# Guardar los nombres en una nueva lista.
+# Para varias listas, reutilizar el método invertir_lista().
+# Guardar cada lista original como clave y su lista invertida como valor.
+#
+# SALIDA:
+# ['Pedro', 'Luis', 'Ana']
+#
+# {
+#     ('Ana', 'Luis', 'Pedro'): ['Pedro', 'Luis', 'Ana'],
+#     ('Maria', 'Jose'): ['Jose', 'Maria'],
+#     ('Carlos', 'Sofia', 'Mateo'): ['Mateo', 'Sofia', 'Carlos']
+# }
+
+
+# 2. BOSQUEJO A MANO
+# Clase InvertirNombres
+#
+#     invertir_lista(lista)
+#         crear lista resultado
+#         recorrer desde el último elemento hasta el primero
+#         agregar cada nombre a resultado
+#         retornar resultado
+#
+#     invertir_varias(*listas)
+#         crear diccionario resultado
+#         para cada lista
+#             invertir la lista usando invertir_lista()
+#             convertir la lista original en tupla
+#             guardar tupla como clave
+#             guardar lista invertida como valor
+#         retornar resultado
+
+
+# 3. PATRÓN
+# Lista para almacenar los nombres invertidos.
+# Uso de range() para recorrer la lista desde el final.
+# Uso de *listas para recibir varias listas.
+# Reutilización del método invertir_lista().
+# Diccionario para relacionar cada lista original con su lista invertida.
+# Uso de tuple() para poder utilizar la lista como clave del diccionario.
+
+
+# 4. CÓDIGO
+
+class InvertirNombres:
+
+    def invertir_lista(self, lista):
+        resultado = []
+
+        for i in range(len(lista) - 1, -1, -1):
+            resultado.append(lista[i])
+
+        return resultado
+
+    def invertir_varias(self, *listas):
+        resultado = {}
+
+        for lista in listas:
+            invertida = self.invertir_lista(lista)
+            resultado[tuple(lista)] = invertida
+
+        return resultado
+
+
+inv = InvertirNombres()
+
+print(inv.invertir_lista(["Ana", "Luis", "Pedro"]))
+
+print(inv.invertir_varias(
+    ["Ana", "Luis", "Pedro"],
+    ["Maria", "Jose"],
+    ["Carlos", "Sofia", "Mateo"]
+))
+
+
+# 5. PRUEBA PASO A PASO
+# Se crea un objeto inv de la clase InvertirNombres.
+#
+# Primero se utiliza invertir_lista() con:
+# ["Ana", "Luis", "Pedro"]
+#
+# La lista se recorre desde el último elemento:
+# Pedro -> se agrega.
+# Luis -> se agrega.
+# Ana -> se agrega.
+#
+# Resultado:
+# ['Pedro', 'Luis', 'Ana']
+#
+# Después se utiliza invertir_varias() con tres listas.
+#
+# Primera lista:
+# ["Ana", "Luis", "Pedro"]
+# Resultado:
+# ['Pedro', 'Luis', 'Ana']
+#
+# Segunda lista:
+# ["Maria", "Jose"]
+# Resultado:
+# ['Jose', 'Maria']
+#
+# Tercera lista:
+# ["Carlos", "Sofia", "Mateo"]
+# Resultado:
+# ['Mateo', 'Sofia', 'Carlos']
+#
+# Las listas originales se convierten en tuplas para utilizarlas
+# como claves del diccionario.
+#
+# SALIDA ESPERADA:
+# ['Pedro', 'Luis', 'Ana']
+#
+# {
+#     ('Ana', 'Luis', 'Pedro'): ['Pedro', 'Luis', 'Ana'],
+#     ('Maria', 'Jose'): ['Jose', 'Maria'],
+#     ('Carlos', 'Sofia', 'Mateo'): ['Mateo', 'Sofia', 'Carlos']
+# }
