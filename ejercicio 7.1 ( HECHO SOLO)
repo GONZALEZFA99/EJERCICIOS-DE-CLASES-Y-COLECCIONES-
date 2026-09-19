@@ -1,0 +1,124 @@
+# EJERCICIO 7.1 - GESTORPRODUCTOS
+# Clase GestorProductos que:
+# 1. Tenga un método agregar_producto(nombre, precio)
+#    que guarde los productos en un diccionario interno.
+# 2. Tenga un método productos_mayores(precio_minimo)
+#    que retorne una lista con los nombres de los productos
+#    cuyo precio sea mayor o igual al valor indicado.
+# 3. Tenga un método precio_promedio()
+#    que retorne el promedio de todos los precios almacenados.
+
+
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# gp = GestorProductos()
+#
+# gp.agregar_producto("Pan", 2.50)
+# gp.agregar_producto("Leche", 3.00)
+# gp.agregar_producto("Arroz", 5.00)
+#
+# print(gp.productos_mayores(3))
+# print(gp.precio_promedio())
+#
+# PROCESO:
+# Guardar cada producto y su precio en un diccionario.
+# Buscar los productos cuyo precio sea mayor o igual a 3.
+# Calcular el promedio de todos los precios.
+#
+# SALIDA:
+# ["Leche", "Arroz"]
+# 3.5
+
+
+# 2. BOSQUEJO A MANO
+# Clase GestorProductos
+#     _productos = {}
+#
+#     agregar_producto(nombre, precio)
+#         guardar nombre y precio en el diccionario
+#
+#     productos_mayores(precio_minimo)
+#         crear lista resultado
+#         recorrer productos
+#         si precio >= precio_minimo
+#             agregar nombre a resultado
+#         retornar resultado
+#
+#     precio_promedio()
+#         sumar todos los precios
+#         dividir para la cantidad de productos
+#         retornar resultado
+
+
+# 3. PATRÓN
+# Diccionario para almacenar los productos.
+# El nombre del producto es la clave.
+# El precio del producto es el valor.
+# Uso de items() para recorrer nombres y precios.
+# Lista para guardar los productos que cumplen la condición.
+# Uso de values(), sum() y len() para calcular el promedio.
+
+
+# 4. CÓDIGO
+
+class GestorProductos:
+    def __init__(self):
+        self._productos = {}
+
+    def agregar_producto(self, nombre, precio):
+        self._productos[nombre] = precio
+
+    def productos_mayores(self, precio_minimo):
+        resultado = []
+
+        for nombre, precio in self._productos.items():
+            if precio >= precio_minimo:
+                resultado.append(nombre)
+
+        return resultado
+
+    def precio_promedio(self):
+        return sum(self._productos.values()) / len(self._productos)
+
+
+gp = GestorProductos()
+
+gp.agregar_producto("Pan", 2.50)
+gp.agregar_producto("Leche", 3.00)
+gp.agregar_producto("Arroz", 5.00)
+
+print(gp.productos_mayores(3))
+
+print(gp.precio_promedio())
+
+
+# 5. PRUEBA PASO A PASO
+# Se crea un objeto gp de la clase GestorProductos.
+#
+# Se agregan los productos:
+# Pan -> 2.50
+# Leche -> 3.00
+# Arroz -> 5.00
+#
+# El diccionario queda:
+# {
+#     "Pan": 2.50,
+#     "Leche": 3.00,
+#     "Arroz": 5.00
+# }
+#
+# Se buscan los productos con precio mayor o igual a 3:
+# Pan -> 2.50 -> no cumple.
+# Leche -> 3.00 -> cumple.
+# Arroz -> 5.00 -> cumple.
+#
+# La lista resultado queda:
+# ["Leche", "Arroz"]
+#
+# Para calcular el promedio:
+# 2.50 + 3.00 + 5.00 = 10.50
+# 10.50 / 3 = 3.5
+#
+# SALIDA ESPERADA:
+# ["Leche", "Arroz"]
+# 3.5
