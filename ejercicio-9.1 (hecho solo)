@@ -1,0 +1,147 @@
+# EJERCICIO 9.1 - ANALIZADORTEXTO
+
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Textos para analizar.
+#
+# PROCESO:
+# Recorrer el texto carácter por carácter.
+# Clasificar los caracteres en vocales, consonantes y espacios.
+# Actualizar el texto con mayor cantidad de caracteres.
+#
+# SALIDA:
+# Diccionario con la cantidad de vocales, consonantes y espacios.
+#
+# EJEMPLO DE ENTRADA:
+# at = AnalizadorTexto()
+#
+# print(at.contar_caracteres("Hola mundo"))
+#
+# SALIDA ESPERADA:
+# {
+#     "vocales": 4,
+#     "consonantes": 5,
+#     "espacios": 1
+# }
+#
+# COLECCIONES PRINCIPALES:
+# Diccionario para los contadores y atributo interno
+# para guardar el texto más largo.
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase AnalizadorTexto
+#     |
+#     --> _texto_mas_largo = ""
+#
+# es_vocal(caracter)
+#     |
+#     --> Si caracter está en "aeiouAEIOU"
+#     --> retornar True
+#     --> Si no, retornar False
+#
+# contar_caracteres(texto)
+#     |
+#     --> Crear diccionario contador
+#     --> Recorrer cada carácter del texto
+#     --> Si es vocal, aumentar vocales
+#     --> Si es espacio, aumentar espacios
+#     --> Si no, aumentar consonantes
+#     --> Comparar longitud del texto
+#     --> Guardar el texto más largo
+#     --> Retornar contador
+
+
+# 3. PATRÓN
+#
+# Diccionario para almacenar los contadores.
+# Recorrido con for para analizar cada carácter.
+# Uso de un método auxiliar es_vocal().
+# Uso de un atributo interno para guardar el texto más largo.
+
+
+# 4. CÓDIGO
+
+class AnalizadorTexto:
+
+    def __init__(self):
+        self._texto_mas_largo = ""
+
+    def es_vocal(self, caracter):
+
+        if caracter in "aeiouAEIOU":
+            return True
+        else:
+            return False
+
+    def contar_caracteres(self, texto):
+
+        contador = {
+            "vocales": 0,
+            "consonantes": 0,
+            "espacios": 0
+        }
+
+        for caracter in texto:
+
+            if self.es_vocal(caracter):
+                contador["vocales"] += 1
+
+            elif caracter == " ":
+                contador["espacios"] += 1
+
+            else:
+                contador["consonantes"] += 1
+
+        if len(texto) > len(self._texto_mas_largo):
+            self._texto_mas_largo = texto
+
+        return contador
+
+
+# USO
+
+at = AnalizadorTexto()
+
+print(at.contar_caracteres("Hola mundo"))
+
+
+# 5. PRUEBA PASO A PASO
+#
+# 1. Se crea el objeto at de la clase AnalizadorTexto.
+#
+# 2. Se analiza el texto:
+#    "Hola mundo"
+#
+# 3. Se recorre carácter por carácter:
+#
+#    H -> consonante
+#    o -> vocal
+#    l -> consonante
+#    a -> vocal
+#    " " -> espacio
+#    m -> consonante
+#    u -> vocal
+#    n -> consonante
+#    d -> consonante
+#    o -> vocal
+#
+# 4. Los contadores quedan:
+#    vocales = 4
+#    consonantes = 5
+#    espacios = 1
+#
+# 5. Se compara la cantidad de caracteres del texto
+#    con el texto más largo guardado.
+#
+# 6. Como "Hola mundo" es el primer texto analizado,
+#    se guarda como texto más largo.
+#
+# SALIDA ESPERADA:
+# {
+#     "vocales": 4,
+#     "consonantes": 5,
+#     "espacios": 1
+# }
