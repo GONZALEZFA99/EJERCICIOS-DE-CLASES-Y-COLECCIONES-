@@ -1,0 +1,224 @@
+# EJERCICIO 18.1 - CALCULADORCERCANIA
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Tuplas (x, y) que representan puntos en un plano.
+#
+# Ejemplo:
+# cc = CalculadorCercania()
+#
+# print(cc.calcular_distancia((0,0),(6,8)))
+#
+# print(cc.punto_mas_lejano(
+#     (0,0),
+#     (3,4),
+#     (8,6),
+#     (1,1)
+# ))
+#
+# PROCESO:
+# Obtener las coordenadas x e y de cada punto.
+# Aplicar la fórmula de distancia euclidiana.
+# Guardar cada distancia calculada en una lista interna.
+# Comparar distancias para encontrar el punto más lejano.
+#
+# SALIDA:
+# 10.0
+#
+# (8,6)
+#
+# COLECCIONES PRINCIPALES:
+# - Tuplas para representar puntos.
+# - Lista interna para almacenar distancias.
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase CalculadorCercania
+#
+#     _distancias = []
+#
+#
+# calcular_distancia(punto1, punto2)
+#     |
+#     --> obtener x1, y1
+#     --> obtener x2, y2
+#     --> aplicar fórmula:
+#
+#          √((x2-x1)² + (y2-y1)²)
+#
+#     --> guardar distancia en lista
+#     --> retornar distancia
+#
+#
+# punto_mas_lejano(referencia, *puntos)
+#     |
+#     --> crear variable punto_lejano
+#     --> crear distancia_mayor
+#     --> recorrer puntos
+#     --> calcular distancia de cada punto
+#     --> comparar distancias
+#     --> guardar punto con mayor distancia
+#     --> retornar punto
+
+
+# 3. PATRÓN
+#
+# Uso de tuplas para manejar coordenadas.
+# Acceso mediante índices:
+# punto[0] -> coordenada x
+# punto[1] -> coordenada y
+#
+# Uso de lista interna para guardar resultados.
+# Uso de *puntos para recibir varios puntos.
+# Reutilización del método calcular_distancia().
+
+
+# 4. CÓDIGO
+
+
+class CalculadorCercania:
+
+    def __init__(self):
+        self._distancias = []
+
+
+    def calcular_distancia(self, punto1, punto2):
+
+        x1 = punto1[0]
+        y1 = punto1[1]
+
+        x2 = punto2[0]
+        y2 = punto2[1]
+
+
+        distancia = ((x2 - x1)**2 + (y2 - y1)**2)**0.5
+
+
+        self._distancias.append(distancia)
+
+        return distancia
+
+
+
+    def punto_mas_lejano(self, referencia, *puntos):
+
+        punto_lejano = None
+        distancia_mayor = 0
+
+
+        for punto in puntos:
+
+            distancia = self.calcular_distancia(
+                referencia,
+                punto
+            )
+
+
+            if distancia > distancia_mayor:
+
+                punto_lejano = punto
+                distancia_mayor = distancia
+
+
+        return punto_lejano
+
+
+
+# USO
+
+cc = CalculadorCercania()
+
+
+print(cc.calcular_distancia((0,0),(6,8)))
+
+
+print(cc.punto_mas_lejano(
+    (0,0),
+    (3,4),
+    (8,6),
+    (1,1)
+))
+
+
+
+# 5. PRUEBA PASO A PASO
+#
+# PRIMERA PRUEBA:
+#
+# calcular_distancia((0,0),(6,8))
+#
+# Punto 1:
+# x1 = 0
+# y1 = 0
+#
+# Punto 2:
+# x2 = 6
+# y2 = 8
+#
+# Aplicamos fórmula:
+#
+# distancia =
+# ((6-0)^2 + (8-0)^2)^0.5
+#
+# distancia =
+# (36 + 64)^0.5
+#
+# distancia =
+# 100^0.5
+#
+# distancia = 10.0
+#
+# Se guarda:
+#
+# _distancias = [10.0]
+#
+#
+# SEGUNDA PRUEBA:
+#
+# punto_mas_lejano((0,0),(3,4),(8,6),(1,1))
+#
+#
+# Punto (3,4):
+#
+# distancia =
+# ((3-0)^2 + (4-0)^2)^0.5
+#
+# distancia = 5
+#
+# Punto más lejano:
+# (3,4)
+#
+#
+# Punto (8,6):
+#
+# distancia =
+# ((8-0)^2 + (6-0)^2)^0.5
+#
+# distancia =
+# (64+36)^0.5
+#
+# distancia = 10
+#
+# Como 10 > 5:
+# punto_lejano = (8,6)
+#
+#
+# Punto (1,1):
+#
+# distancia =
+# 1.41
+#
+# No supera la distancia mayor.
+#
+#
+# Resultado final:
+#
+# (8,6)
+#
+#
+# SALIDA ESPERADA:
+#
+# 10.0
+#
+# (8,6)
