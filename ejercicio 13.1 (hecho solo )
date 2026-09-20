@@ -1,0 +1,185 @@
+# EJERCICIO 13.1 - MEZCLADORLISTAS
+
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Dos o más listas de números.
+#
+# Ejemplo:
+# m = MezcladorListas()
+#
+# print(m.alternar([1,2,3], [4,5,6]))
+#
+# PROCESO:
+# Recorrer las listas utilizando índices.
+# Tomar un elemento de la primera lista.
+# Tomar un elemento de la segunda lista.
+# Agregarlos alternadamente a una nueva lista.
+# Para varias listas, reutilizar el método alternar().
+#
+# SALIDA:
+# [1,4,2,5,3,6]
+#
+# COLECCIÓN PRINCIPAL:
+# Listas e índices para acceder a posiciones.
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase MezcladorListas
+#
+# alternar(lista1, lista2)
+#     |
+#     --> crear lista resultado
+#     --> recorrer posiciones con índice
+#     --> agregar elemento lista1
+#     --> agregar elemento lista2
+#     --> retornar resultado
+#
+# Ejemplo:
+#
+# lista1 = [1,2,3]
+# lista2 = [4,5,6]
+#
+# índice 0:
+#     agregar 1
+#     agregar 4
+#
+# índice 1:
+#     agregar 2
+#     agregar 5
+#
+# índice 2:
+#     agregar 3
+#     agregar 6
+#
+# Resultado:
+# [1,4,2,5,3,6]
+#
+#
+# alternar_multiples(*listas)
+#     |
+#     --> tomar primera lista
+#     --> recorrer las demás listas
+#     --> reutilizar alternar()
+#     --> retornar resultado
+
+
+# 3. PATRÓN
+#
+# Uso de listas para almacenar resultados.
+# Uso de índices para acceder a posiciones.
+# Uso de range() y len() para recorrer elementos.
+# Uso de *listas para recibir varias listas.
+# Reutilización del método alternar().
+
+
+# 4. CÓDIGO
+
+
+class MezcladorListas:
+
+    def alternar(self, lista1, lista2):
+
+        resultado = []
+
+        for i in range(len(lista1)):
+
+            resultado.append(lista1[i])
+            resultado.append(lista2[i])
+
+        return resultado
+
+
+    def alternar_multiples(self, *listas):
+
+        resultado = listas[0]
+
+        for lista in listas[1:]:
+
+            resultado = self.alternar(resultado, lista)
+
+        return resultado
+
+
+
+# USO
+
+m = MezcladorListas()
+
+print(m.alternar([1,2,3], [4,5,6]))
+
+print(m.alternar_multiples(
+    [1,2],
+    [3,4],
+    [5,6]
+))
+
+
+# 5. PRUEBA PASO A PASO
+#
+# PRIMERA PRUEBA:
+#
+# alternar([1,2,3], [4,5,6])
+#
+# Inicio:
+# resultado = []
+#
+# Paso 1:
+# i = 0
+# lista1[0] = 1
+# lista2[0] = 4
+#
+# resultado:
+# [1,4]
+#
+# Paso 2:
+# i = 1
+# lista1[1] = 2
+# lista2[1] = 5
+#
+# resultado:
+# [1,4,2,5]
+#
+# Paso 3:
+# i = 2
+# lista1[2] = 3
+# lista2[2] = 6
+#
+# resultado:
+# [1,4,2,5,3,6]
+#
+#
+# SEGUNDA PRUEBA:
+#
+# alternar_multiples(
+#     [1,2],
+#     [3,4],
+#     [5,6]
+# )
+#
+# Primero:
+# resultado = [1,2]
+#
+# Se combina con:
+# [3,4]
+#
+# resultado:
+# [1,3,2,4]
+#
+# Luego se combina con:
+# [5,6]
+#
+# resultado:
+# [1,5,3,6,2,4]
+#
+# NOTA:
+# El método del ingeniero reutiliza alternar(),
+# por eso la combinación de varias listas depende
+# del resultado de cada mezcla anterior.
+#
+# SALIDA DEL CÓDIGO:
+#
+# [1,4,2,5,3,6]
+#
+# [1,5,3,6,2,4]
