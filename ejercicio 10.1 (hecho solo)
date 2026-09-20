@@ -1,0 +1,152 @@
+# EJERCICIO 10.1 - LISTACOMPRAS
+
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Nombres de productos y categorías.
+#
+# PROCESO:
+# Guardar productos como tuplas dentro de una lista.
+# Recorrer la lista para filtrar los productos por categoría.
+# Eliminar productos de la lista según su nombre.
+#
+# SALIDA:
+# Lista de productos filtrados.
+#
+# EJEMPLO DE ENTRADA:
+# lc = ListaCompras()
+#
+# lc.agregar_producto("Leche", "lacteos")
+# lc.agregar_producto("Pan", "harina")
+# lc.agregar_producto("Queso", "lacteos")
+#
+# print(lc.productos_por_categoria("lacteos"))
+#
+# SALIDA ESPERADA:
+# [("Leche", "lacteos"), ("Queso", "lacteos")]
+#
+# COLECCIÓN PRINCIPAL:
+# Lista de tuplas:
+# (producto, categoria)
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase ListaCompras
+#     |
+#     --> _productos = []
+#
+# agregar_producto(nombre, categoria)
+#     |
+#     --> crear tupla (nombre, categoria)
+#     --> guardar tupla en _productos
+#
+# productos_por_categoria(categoria)
+#     |
+#     --> crear lista resultado
+#     --> recorrer _productos
+#     --> comparar categoría
+#     --> guardar productos que coincidan
+#     --> retornar resultado
+#
+# eliminar_producto(nombre)
+#     |
+#     --> recorrer _productos
+#     --> comparar nombre del producto
+#     --> eliminar producto encontrado
+
+
+# 3. PATRÓN
+#
+# Lista de tuplas.
+# Cada producto se guarda como:
+# (nombre, categoria)
+#
+# Se utiliza un for para recorrer la lista.
+# Se utiliza la posición 0 de la tupla para obtener el nombre.
+# Se utiliza la posición 1 de la tupla para obtener la categoría.
+
+
+# 4. CÓDIGO
+
+class ListaCompras:
+
+    def __init__(self):
+        self._productos = []
+
+    def agregar_producto(self, nombre, categoria):
+        self._productos.append((nombre, categoria))
+
+    def productos_por_categoria(self, categoria):
+
+        resultado = []
+
+        for producto in self._productos:
+
+            if producto[1] == categoria:
+                resultado.append(producto)
+
+        return resultado
+
+    def eliminar_producto(self, nombre):
+
+        for producto in self._productos:
+
+            if producto[0] == nombre:
+                self._productos.remove(producto)
+
+
+# USO
+
+lc = ListaCompras()
+
+lc.agregar_producto("Leche", "lacteos")
+lc.agregar_producto("Pan", "harina")
+lc.agregar_producto("Queso", "lacteos")
+
+print(lc.productos_por_categoria("lacteos"))
+
+lc.eliminar_producto("Leche")
+
+print(lc.productos_por_categoria("lacteos"))
+
+
+# 5. PRUEBA PASO A PASO
+#
+# 1. Se crea el objeto lc de la clase ListaCompras.
+#
+# 2. Se agregan los productos:
+#
+#    ("Leche", "lacteos")
+#    ("Pan", "harina")
+#    ("Queso", "lacteos")
+#
+# 3. La lista _productos queda:
+#    [
+#        ("Leche", "lacteos"),
+#        ("Pan", "harina"),
+#        ("Queso", "lacteos")
+#    ]
+#
+# 4. Se buscan los productos de la categoría "lacteos".
+#
+# 5. Se revisa cada producto:
+#
+#    ("Leche", "lacteos") -> coincide.
+#    ("Pan", "harina") -> no coincide.
+#    ("Queso", "lacteos") -> coincide.
+#
+# 6. El resultado es:
+#    [("Leche", "lacteos"), ("Queso", "lacteos")]
+#
+# 7. Después se elimina el producto "Leche".
+#
+# 8. La lista queda:
+#    [
+#        ("Pan", "harina"),
+#        ("Queso", "lacteos")
+#    ]
+#
+# 9. Al buscar nuevamente los productos de "lacteos",
+#    el resultado es:
+#    [("Queso", "lacteos")]
