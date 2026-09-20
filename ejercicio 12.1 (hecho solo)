@@ -1,0 +1,168 @@
+# EJERCICIO 12.1 - SELECTORNUMEROS
+
+
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Pares (inicio, fin) para crear varias secuencias.
+#
+# Ejemplo:
+# sn = SelectorNumeros()
+#
+# print(sn.numeros_en_multiples_secuencias((1,3),(2,5),(7,8)))
+#
+# PROCESO:
+# Crear secuencias utilizando rangos.
+# Convertir cada secuencia en una tupla.
+# Unir los números de varias secuencias utilizando un conjunto.
+# Eliminar valores repetidos.
+# Convertir el resultado final en una lista.
+#
+# SALIDA:
+# [1,2,3,4,5,7,8]
+#
+# COLECCIONES PRINCIPALES:
+# - Tuplas como parámetros.
+# - Set para eliminar duplicados.
+# - Lista como resultado final.
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase SelectorNumeros
+#
+# crear_secuencia(inicio, fin)
+#     |
+#     --> usar range()
+#     --> convertir resultado en tupla
+#     --> retornar tupla
+#
+# Ejemplo:
+# crear_secuencia(3,6)
+#
+# Resultado:
+# (3,4,5,6)
+#
+#
+# numeros_en_multiples_secuencias(*secuencias)
+#     |
+#     --> crear conjunto vacío
+#     --> recorrer cada tupla
+#     --> separar inicio y fin
+#     --> crear secuencia
+#     --> agregar números al set
+#     --> convertir set a lista
+#     --> retornar resultado
+
+
+# 3. PATRÓN
+#
+# Uso de tuplas para representar rangos.
+# Uso de range() para generar números.
+# Uso de set() para eliminar valores repetidos.
+# Uso de update() para agregar varios valores al conjunto.
+# Uso de list() para entregar el resultado final.
+
+
+# 4. CÓDIGO
+
+
+class SelectorNumeros:
+
+    def crear_secuencia(self, inicio, fin):
+
+        return tuple(range(inicio, fin + 1))
+
+
+    def numeros_en_multiples_secuencias(self, *secuencias):
+
+        numeros_unicos = set()
+
+        for secuencia in secuencias:
+
+            inicio, fin = secuencia
+
+            numeros = self.crear_secuencia(inicio, fin)
+
+            numeros_unicos.update(numeros)
+
+        return list(numeros_unicos)
+
+
+
+# USO
+
+sn = SelectorNumeros()
+
+print(sn.crear_secuencia(3,6))
+
+print(sn.numeros_en_multiples_secuencias((1,3),(2,5),(7,8)))
+
+
+# 5. PRUEBA PASO A PASO
+#
+# PRIMERA PRUEBA:
+#
+# crear_secuencia(3,6)
+#
+# range(3,7) genera:
+# 3,4,5,6
+#
+# Se convierte en tupla:
+#
+# (3,4,5,6)
+#
+#
+# SEGUNDA PRUEBA:
+#
+# numeros_en_multiples_secuencias((1,3),(2,5),(7,8))
+#
+# Inicio:
+# numeros_unicos = set()
+#
+#
+# Primera secuencia:
+# (1,3)
+#
+# crear_secuencia(1,3)
+#
+# Resultado:
+# (1,2,3)
+#
+# Set:
+# {1,2,3}
+#
+#
+# Segunda secuencia:
+# (2,5)
+#
+# crear_secuencia(2,5)
+#
+# Resultado:
+# (2,3,4,5)
+#
+# Se agregan al set:
+# {1,2,3,4,5}
+#
+#
+# Tercera secuencia:
+# (7,8)
+#
+# crear_secuencia(7,8)
+#
+# Resultado:
+# (7,8)
+#
+# Set final:
+# {1,2,3,4,5,7,8}
+#
+#
+# Se convierte a lista:
+#
+# [1,2,3,4,5,7,8]
+#
+# SALIDA ESPERADA:
+#
+# (3,4,5,6)
+#
+# [1,2,3,4,5,7,8]
