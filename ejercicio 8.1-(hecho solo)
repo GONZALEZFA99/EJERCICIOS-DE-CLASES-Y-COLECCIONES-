@@ -1,0 +1,138 @@
+# EJERCICIO 8.1 - CURSOS
+
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Nombres de cursos y estudiantes.
+#
+# PROCESO:
+# Crear una estructura de curso -> lista de estudiantes.
+# Agregar estudiantes al curso indicado.
+# Contar la cantidad de estudiantes de cada curso.
+# Comparar las cantidades para encontrar el curso con más estudiantes.
+#
+# SALIDA:
+# Nombre del curso que tenga la mayor cantidad de estudiantes.
+#
+# EJEMPLO DE ENTRADA:
+# c = Cursos()
+#
+# c.crear_curso("Python")
+# c.crear_curso("Java")
+#
+# c.agregar_estudiante("Python", "Ana")
+# c.agregar_estudiante("Python", "Luis")
+#
+# c.agregar_estudiante("Java", "Pedro")
+#
+# print(c.curso_mayor_estudiantes())
+#
+# SALIDA ESPERADA:
+# Python
+#
+# COLECCIÓN PRINCIPAL:
+# Diccionario de listas:
+# curso -> [estudiantes]
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase Cursos
+#     |
+#     --> _cursos = {}
+#
+# crear_curso(nombre_curso)
+#     |
+#     --> crear curso dentro del diccionario
+#     --> curso = []
+#
+# agregar_estudiante(curso, estudiante)
+#     |
+#     --> buscar curso
+#     --> agregar estudiante a la lista
+#
+# curso_mayor_estudiantes()
+#     |
+#     --> recorrer cursos
+#     --> contar estudiantes
+#     --> comparar cantidades
+#     --> guardar curso con mayor cantidad
+#     --> retornar curso
+
+
+# 3. PATRÓN
+#
+# Diccionario de listas.
+# El diccionario utiliza el nombre del curso como clave
+# y una lista de estudiantes como valor.
+#
+# Se utiliza un recorrido con for para comparar
+# la cantidad de estudiantes de cada curso.
+
+
+# 4. CÓDIGO
+
+class Cursos:
+
+    def __init__(self):
+        self._cursos = {}
+
+    def crear_curso(self, nombre_curso):
+        self._cursos[nombre_curso] = []
+
+    def agregar_estudiante(self, curso, estudiante):
+        self._cursos[curso].append(estudiante)
+
+    def curso_mayor_estudiantes(self):
+
+        mayor_curso = None
+        mayor_cantidad = 0
+
+        for curso, estudiantes in self._cursos.items():
+            cantidad = len(estudiantes)
+
+            if cantidad > mayor_cantidad:
+                mayor_curso = curso
+                mayor_cantidad = cantidad
+
+        return mayor_curso
+
+
+# USO
+
+c = Cursos()
+
+c.crear_curso("Python")
+c.crear_curso("Java")
+
+c.agregar_estudiante("Python", "Ana")
+c.agregar_estudiante("Python", "Luis")
+
+c.agregar_estudiante("Java", "Pedro")
+
+print(c.curso_mayor_estudiantes())
+
+
+# 5. PRUEBA PASO A PASO
+#
+# 1. Se crea el objeto c de la clase Cursos.
+#
+# 2. Se crean los cursos:
+#    Python -> []
+#    Java -> []
+#
+# 3. Se agregan los estudiantes:
+#    Python -> ["Ana", "Luis"]
+#    Java -> ["Pedro"]
+#
+# 4. El método curso_mayor_estudiantes() recorre los cursos.
+#
+# 5. Python tiene 2 estudiantes.
+#    Java tiene 1 estudiante.
+#
+# 6. Se compara la cantidad de estudiantes.
+#
+# 7. Python tiene la mayor cantidad.
+#
+# RESULTADO:
+# Python
