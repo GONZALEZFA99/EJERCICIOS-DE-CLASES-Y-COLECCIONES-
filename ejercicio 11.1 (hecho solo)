@@ -1,0 +1,195 @@
+# EJERCICIO 4.1 -CONTADORPALABRAS
+
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Palabras individuales.
+#
+# Ejemplo:
+# cp = ContadorPalabras()
+#
+# cp.agregar_palabra("python")
+# cp.agregar_palabra("java")
+# cp.agregar_palabra("python")
+# cp.agregar_palabra("python")
+#
+# print(cp.palabra_mas_repetida())
+# print(cp.cantidad_palabra("python"))
+#
+# PROCESO:
+# Guardar cada palabra en un diccionario contador.
+# Si la palabra ya existe, aumentar su frecuencia.
+# Si no existe, crearla con valor 1.
+# Recorrer el diccionario para encontrar la palabra
+# con mayor cantidad de apariciones.
+#
+# SALIDA:
+# python
+#
+# 3
+#
+# COLECCIÓN PRINCIPAL:
+# Diccionario como contador:
+# palabra -> frecuencia
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase ContadorPalabras
+#     |
+#     --> _palabras = {}
+#
+# agregar_palabra(palabra)
+#     |
+#     --> Si palabra existe:
+#             aumentar contador
+#     --> Si no existe:
+#             crear palabra con valor 1
+#
+# palabra_mas_repetida()
+#     |
+#     --> crear mayor_palabra
+#     --> recorrer diccionario
+#     --> comparar cantidades
+#     --> guardar palabra con mayor frecuencia
+#     --> retornar palabra
+#
+# cantidad_palabra(palabra)
+#     |
+#     --> buscar palabra en diccionario
+#     --> retornar cantidad
+#     --> si no existe retornar 0
+
+
+# 3. PATRÓN
+#
+# Diccionario utilizado como contador de frecuencias.
+# La clave representa la palabra.
+# El valor representa la cantidad de veces que aparece.
+#
+# Se utiliza:
+# - if para comprobar si la palabra existe.
+# - items() para recorrer palabra y cantidad.
+# - variable auxiliar para guardar el máximo.
+# - get() para obtener valores evitando errores.
+
+
+# 4. CÓDIGO
+
+class ContadorPalabras:
+
+    def __init__(self):
+        self._palabras = {}
+
+    def agregar_palabra(self, palabra):
+
+        if palabra in self._palabras:
+            self._palabras[palabra] += 1
+
+        else:
+            self._palabras[palabra] = 1
+
+
+    def palabra_mas_repetida(self):
+
+        mayor_palabra = None
+        mayor_cantidad = 0
+
+        for palabra, cantidad in self._palabras.items():
+
+            if cantidad > mayor_cantidad:
+                mayor_palabra = palabra
+                mayor_cantidad = cantidad
+
+        return mayor_palabra
+
+
+    def cantidad_palabra(self, palabra):
+
+        return self._palabras.get(palabra, 0)
+
+
+
+# USO
+
+cp = ContadorPalabras()
+
+cp.agregar_palabra("python")
+cp.agregar_palabra("java")
+cp.agregar_palabra("python")
+cp.agregar_palabra("python")
+
+print(cp.palabra_mas_repetida())
+
+print(cp.cantidad_palabra("python"))
+
+
+# 5. PRUEBA PASO A PASO
+#
+# Se crea el objeto cp de la clase ContadorPalabras.
+#
+# Estado inicial:
+# _palabras = {}
+#
+# Paso 1:
+# agregar_palabra("python")
+#
+# La palabra no existe.
+# Se crea:
+# {
+#     "python": 1
+# }
+#
+# Paso 2:
+# agregar_palabra("java")
+#
+# La palabra no existe.
+# Se crea:
+# {
+#     "python": 1,
+#     "java": 1
+# }
+#
+# Paso 3:
+# agregar_palabra("python")
+#
+# La palabra ya existe.
+# Se aumenta la cantidad:
+# {
+#     "python": 2,
+#     "java": 1
+# }
+#
+# Paso 4:
+# agregar_palabra("python")
+#
+# La palabra ya existe.
+# Se aumenta nuevamente:
+# {
+#     "python": 3,
+#     "java": 1
+# }
+#
+# Paso 5:
+# palabra_mas_repetida()
+#
+# Se comparan las cantidades:
+#
+# python -> 3
+# java -> 1
+#
+# La mayor cantidad pertenece a:
+# python
+#
+# Paso 6:
+# cantidad_palabra("python")
+#
+# Busca python en el diccionario.
+#
+# Resultado:
+# 3
+#
+# SALIDA ESPERADA:
+# python
+#
+# 3
