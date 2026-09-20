@@ -1,0 +1,204 @@
+# EJERCICIO 19.1 - BIBLIOTECA
+# 1. ENTENDER EL PROBLEMA
+# ENTRADA:
+# Títulos de libros y cantidades disponibles.
+# Ejemplo:
+# b = Biblioteca()
+# b.agregar_libro("Python", 5)
+# b.agregar_libro("Java", 2)
+# print(b.prestar_libro("Python"))
+# print(b.libros_bajo_disponibilidad(3))
+# PROCESO:
+# Guardar libros y cantidades en un diccionario.
+# Si el libro ya existe, aumentar la cantidad.
+# Validar si existe disponibilidad al prestar un libro.
+# Disminuir la cantidad cuando se realiza un préstamo.
+# Recorrer el diccionario para encontrar libros con poca disponibilidad.
+# SALIDA:
+# True
+# ["Java"]
+# COLECCIÓN PRINCIPAL:
+# Diccionario como base de datos simple:
+# libro -> cantidad
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase Biblioteca
+#
+#     _libros = {}
+#
+#
+# agregar_libro(titulo, cantidad)
+#     |
+#     --> Si el libro existe:
+#             sumar cantidad nueva
+#     --> Si no existe:
+#             crear libro con cantidad
+#
+#
+# prestar_libro(titulo)
+#     |
+#     --> verificar si existe libro
+#     --> verificar si cantidad > 0
+#     --> disminuir cantidad en 1
+#     --> retornar True
+#     --> si no hay disponibilidad retornar False
+#
+#
+# libros_bajo_disponibilidad(minimo)
+#     |
+#     --> crear lista resultado
+#     --> recorrer libros con items()
+#     --> comparar cantidad con mínimo
+#     --> guardar libros que cumplan condición
+
+
+# 3. PATRÓN
+#
+# Diccionario como acumulador de cantidades.
+# La clave representa el título del libro.
+# El valor representa la cantidad disponible.
+#
+# Se utiliza:
+# - if para comprobar existencia.
+# - items() para recorrer clave y valor.
+# - lista para almacenar resultados filtrados.
+
+
+# 4. CÓDIGO
+
+
+class Biblioteca:
+
+    def __init__(self):
+        self._libros = {}
+
+
+    def agregar_libro(self, titulo, cantidad):
+
+        if titulo in self._libros:
+
+            self._libros[titulo] += cantidad
+
+        else:
+
+            self._libros[titulo] = cantidad
+
+
+
+    def prestar_libro(self, titulo):
+
+        if titulo in self._libros:
+
+            if self._libros[titulo] > 0:
+
+                self._libros[titulo] -= 1
+
+                return True
+
+        return False
+
+
+
+    def libros_bajo_disponibilidad(self, minimo):
+
+        resultado = []
+
+        for titulo, cantidad in self._libros.items():
+
+            if cantidad < minimo:
+
+                resultado.append(titulo)
+
+        return resultado
+
+
+
+# USO
+
+b = Biblioteca()
+
+b.agregar_libro("Python", 5)
+b.agregar_libro("Java", 2)
+
+print(b.prestar_libro("Python"))
+
+print(b.libros_bajo_disponibilidad(3))
+
+
+# 5. PRUEBA PASO A PASO
+#
+# Se crea el objeto b de la clase Biblioteca.
+#
+# Estado inicial:
+#
+# _libros = {}
+#
+#
+# Paso 1:
+# agregar_libro("Python",5)
+#
+# El libro no existe.
+#
+# Se crea:
+#
+# {
+#     "Python":5
+# }
+#
+#
+# Paso 2:
+# agregar_libro("Java",2)
+#
+# El libro no existe.
+#
+# Diccionario:
+#
+# {
+#     "Python":5,
+#     "Java":2
+# }
+#
+#
+# Paso 3:
+# prestar_libro("Python")
+#
+# Python existe.
+#
+# Cantidad disponible:
+# 5
+#
+# Se resta 1:
+#
+# {
+#     "Python":4,
+#     "Java":2
+# }
+#
+# Retorna:
+# True
+#
+#
+# Paso 4:
+# libros_bajo_disponibilidad(3)
+#
+# Se recorren los libros:
+#
+# Python -> 4
+# 4 < 3 -> falso
+#
+# Java -> 2
+# 2 < 3 -> verdadero
+#
+# Se agrega Java a resultado.
+#
+# Resultado:
+# ["Java"]
+#
+#
+# SALIDA ESPERADA:
+#
+# True
+#
+# ["Java"]
