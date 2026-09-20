@@ -1,0 +1,214 @@
+# EJERCICIO 15.1 - FACTORIZADORNUMERO
+
+
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Uno o varios números.
+#
+# Ejemplo:
+# f = FactorizadorNumero()
+#
+# print(f.encontrar_factores(18))
+#
+# print(f.es_abundante(12))
+#
+# print(f.factorizar_multiples(6,10,12))
+#
+# PROCESO:
+# Recorrer números desde 1 hasta el número indicado.
+# Comprobar cuáles dividen exactamente al número.
+# Guardar los factores encontrados en una tupla.
+# Sumar los factores sin incluir el número original
+# para comprobar si es abundante.
+# Guardar varios resultados en un diccionario.
+#
+# SALIDA:
+# Tupla con factores.
+# Valor True o False.
+# Diccionario con números y factores.
+#
+# COLECCIONES PRINCIPALES:
+# - Tuplas para almacenar factores.
+# - Diccionario para múltiples resultados.
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase FactorizadorNumero
+#
+# encontrar_factores(numero)
+#     |
+#     --> crear lista factores
+#     --> recorrer desde 1 hasta numero
+#     --> si numero % i == 0
+#             guardar factor
+#     --> convertir lista en tupla
+#     --> retornar tupla
+#
+#
+# Ejemplo:
+# numero = 18
+#
+# 1 divide a 18 -> guardar
+# 2 divide a 18 -> guardar
+# 3 divide a 18 -> guardar
+# 6 divide a 18 -> guardar
+# 9 divide a 18 -> guardar
+# 18 divide a 18 -> guardar
+#
+# Resultado:
+# (1,2,3,6,9,18)
+#
+#
+# es_abundante(numero)
+#     |
+#     --> obtener factores
+#     --> quitar el último factor (el propio número)
+#     --> sumar factores restantes
+#     --> comparar suma con número
+#
+#
+# factorizar_multiples(*numeros)
+#     |
+#     --> crear diccionario
+#     --> recorrer números
+#     --> guardar número y sus factores
+
+
+# 3. PATRÓN
+#
+# Uso de bucles para encontrar divisores.
+# Uso de lista temporal para construir factores.
+# Conversión de lista a tupla.
+# Reutilización del método encontrar_factores().
+# Diccionario para almacenar resultados múltiples.
+
+
+# 4. CÓDIGO
+
+
+class FactorizadorNumero:
+
+    def encontrar_factores(self, numero):
+
+        factores = []
+
+        for i in range(1, numero + 1):
+
+            if numero % i == 0:
+                factores.append(i)
+
+        return tuple(factores)
+
+
+    def es_abundante(self, numero):
+
+        factores = self.encontrar_factores(numero)
+
+        suma = sum(factores[:-1])
+
+        if suma > numero:
+            return True
+        else:
+            return False
+
+
+    def factorizar_multiples(self, *numeros):
+
+        resultado = {}
+
+        for numero in numeros:
+
+            resultado[numero] = self.encontrar_factores(numero)
+
+        return resultado
+
+
+
+# USO
+
+f = FactorizadorNumero()
+
+print(f.encontrar_factores(18))
+
+print(f.es_abundante(12))
+
+print(f.factorizar_multiples(6,10,12))
+
+
+# 5. PRUEBA PASO A PASO
+#
+# PRIMERA PRUEBA:
+#
+# encontrar_factores(18)
+#
+# Inicio:
+# factores = []
+#
+# Se revisan los números del 1 al 18:
+#
+# 1 -> divide a 18 -> guardar
+# 2 -> divide a 18 -> guardar
+# 3 -> divide a 18 -> guardar
+# 4 -> no divide
+# 5 -> no divide
+# 6 -> divide -> guardar
+# 7 -> no divide
+# 8 -> no divide
+# 9 -> divide -> guardar
+# ...
+# 18 -> divide -> guardar
+#
+# Lista:
+# [1,2,3,6,9,18]
+#
+# Se convierte a tupla:
+#
+# (1,2,3,6,9,18)
+#
+#
+# SEGUNDA PRUEBA:
+#
+# es_abundante(12)
+#
+# Factores:
+# (1,2,3,4,6,12)
+#
+# Se elimina el propio número:
+#
+# (1,2,3,4,6)
+#
+# Suma:
+# 1+2+3+4+6 = 16
+#
+# Comparación:
+# 16 > 12
+#
+# Resultado:
+# True
+#
+#
+# TERCERA PRUEBA:
+#
+# factorizar_multiples(6,10,12)
+#
+# Se crea diccionario:
+#
+# {
+#    6: (1,2,3,6),
+#    10: (1,2,5,10),
+#    12: (1,2,3,4,6,12)
+# }
+#
+# SALIDA ESPERADA:
+#
+# (1,2,3,6,9,18)
+#
+# True
+#
+# {
+#    6: (1,2,3,6),
+#    10: (1,2,5,10),
+#    12: (1,2,3,4,6,12)
+# }
