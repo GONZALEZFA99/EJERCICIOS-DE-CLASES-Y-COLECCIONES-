@@ -1,0 +1,220 @@
+# EJERCICIO 14.1 -REGISTROVENTAS
+
+
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Producto -> cantidad vendida.
+#
+# Ejemplo:
+# rv = RegistroVentas()
+#
+# rv.registrar_producto("Pan", 5)
+# rv.registrar_producto("Leche", 3)
+# rv.registrar_producto("Pan", 5)
+#
+# print(rv.productos_mas_vendidos(5))
+# print(rv.producto_mayor_venta())
+#
+# PROCESO:
+# Guardar los productos en un diccionario.
+# Si el producto ya existe, acumular la cantidad vendida.
+# Recorrer el diccionario para filtrar productos.
+# Comparar cantidades para encontrar el producto más vendido.
+#
+# SALIDA:
+# ["Pan"]
+#
+# ("Pan", 10)
+#
+# COLECCIÓN PRINCIPAL:
+# Diccionario como acumulador:
+# producto -> cantidad
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase RegistroVentas
+#     |
+#     --> _ventas = {}
+#
+# registrar_producto(producto, cantidad)
+#     |
+#     --> Si producto existe:
+#             sumar cantidad nueva
+#     --> Si no existe:
+#             guardar producto con cantidad
+#
+# Ejemplo:
+#
+# registrar_producto("Pan",5)
+# _ventas = {"Pan":5}
+#
+# registrar_producto("Pan",5)
+# _ventas = {"Pan":10}
+#
+#
+# productos_mas_vendidos(cantidad_minima)
+#     |
+#     --> crear lista resultado
+#     --> recorrer diccionario
+#     --> si cantidad >= mínimo
+#             guardar producto
+#     --> retornar lista
+#
+#
+# producto_mayor_venta()
+#     |
+#     --> recorrer productos
+#     --> comparar cantidades
+#     --> guardar mayor producto
+#     --> retornar tupla
+
+
+# 3. PATRÓN
+#
+# Diccionario utilizado como acumulador.
+# La clave representa el producto.
+# El valor representa la cantidad vendida.
+#
+# Se utiliza:
+# - if para comprobar si existe el producto.
+# - items() para recorrer producto y cantidad.
+# - variable auxiliar para encontrar el máximo.
+# - tupla para retornar producto y cantidad.
+
+
+# 4. CÓDIGO
+
+
+class RegistroVentas:
+
+    def __init__(self):
+        self._ventas = {}
+
+
+    def registrar_producto(self, producto, cantidad):
+
+        if producto in self._ventas:
+            self._ventas[producto] += cantidad
+
+        else:
+            self._ventas[producto] = cantidad
+
+
+    def productos_mas_vendidos(self, cantidad_minima):
+
+        resultado = []
+
+        for producto, cantidad in self._ventas.items():
+
+            if cantidad >= cantidad_minima:
+                resultado.append(producto)
+
+        return resultado
+
+
+    def producto_mayor_venta(self):
+
+        mayor_producto = None
+        mayor_cantidad = 0
+
+        for producto, cantidad in self._ventas.items():
+
+            if cantidad > mayor_cantidad:
+                mayor_producto = producto
+                mayor_cantidad = cantidad
+
+        return (mayor_producto, mayor_cantidad)
+
+
+
+# USO
+
+rv = RegistroVentas()
+
+rv.registrar_producto("Pan", 5)
+rv.registrar_producto("Leche", 3)
+rv.registrar_producto("Pan", 5)
+
+print(rv.productos_mas_vendidos(5))
+
+print(rv.producto_mayor_venta())
+
+
+# 5. PRUEBA PASO A PASO
+#
+# Se crea el objeto rv de la clase RegistroVentas.
+#
+# Estado inicial:
+# _ventas = {}
+#
+#
+# Paso 1:
+# registrar_producto("Pan",5)
+#
+# El producto no existe.
+# Se crea:
+#
+# {
+#     "Pan": 5
+# }
+#
+#
+# Paso 2:
+# registrar_producto("Leche",3)
+#
+# El producto no existe.
+# Se crea:
+#
+# {
+#     "Pan":5,
+#     "Leche":3
+# }
+#
+#
+# Paso 3:
+# registrar_producto("Pan",5)
+#
+# El producto ya existe.
+# Se acumula la cantidad:
+#
+# {
+#     "Pan":10,
+#     "Leche":3
+# }
+#
+#
+# Paso 4:
+# productos_mas_vendidos(5)
+#
+# Se recorren los productos:
+#
+# Pan -> 10
+# 10 >= 5 -> cumple
+#
+# Leche -> 3
+# 3 >= 5 -> no cumple
+#
+# Resultado:
+# ["Pan"]
+#
+#
+# Paso 5:
+# producto_mayor_venta()
+#
+# Se comparan cantidades:
+#
+# Pan -> 10
+# Leche -> 3
+#
+# La mayor cantidad es:
+#
+# ("Pan",10)
+#
+#
+# SALIDA ESPERADA:
+#
+# ["Pan"]
+#
+# ("Pan",10)
