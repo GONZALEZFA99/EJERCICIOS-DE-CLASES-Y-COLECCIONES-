@@ -1,0 +1,172 @@
+# EJERCICIO 16.1 - CODIFICADORSIMPLE
+
+
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Texto y desplazamiento numérico.
+#
+# Ejemplo:
+# cs = CodificadorSimple()
+#
+# print(cs.codificar_texto("python", 3))
+#
+# PROCESO:
+# Convertir cada letra a un código numérico utilizando ord().
+# Desplazar la posición de la letra en el alfabeto.
+# Utilizar % para mantener el ciclo entre las letras.
+# Convertir nuevamente el código a letra utilizando chr().
+# Guardar el texto original y el texto codificado en un diccionario.
+#
+# SALIDA:
+# Texto codificado.
+#
+# Ejemplo:
+# python + 3
+# sbwkrq
+#
+# COLECCIONES PRINCIPALES:
+# - Diccionario para historial.
+# - Strings para recorrer caracteres.
+# - ord() y chr() para convertir letras.
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase CodificadorSimple
+#
+#     _historial = {}
+#
+#
+# desplazar_letra(letra, desplazamiento)
+#     |
+#     --> convertir letra a código con ord()
+#     --> mover posición en el alfabeto
+#     --> usar % 26 para reiniciar después de z
+#     --> convertir código nuevamente con chr()
+#     --> retornar letra nueva
+#
+#
+# Ejemplo:
+#
+# letra = "a"
+# desplazamiento = 2
+#
+# a -> b -> c
+#
+# Resultado:
+# c
+#
+#
+# codificar_texto(texto, desplazamiento)
+#     |
+#     --> crear resultado vacío
+#     --> recorrer cada letra
+#     --> llamar desplazar_letra()
+#     --> unir letras modificadas
+#     --> guardar en historial
+#     --> retornar resultado
+
+
+# 3. PATRÓN
+#
+# Uso de métodos separados para dividir responsabilidades.
+# Uso de ord() para obtener código ASCII.
+# Uso de chr() para convertir código a letra.
+# Uso de módulo (%) para controlar el ciclo del alfabeto.
+# Uso de diccionario como historial de conversiones.
+
+
+# 4. CÓDIGO
+
+
+class CodificadorSimple:
+
+    def __init__(self):
+        self._historial = {}
+
+
+    def desplazar_letra(self, letra, desplazamiento):
+
+        codigo = ord(letra)
+
+        nuevo_codigo = (
+            codigo - ord("a") + desplazamiento
+        ) % 26 + ord("a")
+
+        return chr(nuevo_codigo)
+
+
+    def codificar_texto(self, texto, desplazamiento):
+
+        resultado = ""
+
+        for letra in texto:
+
+            resultado += self.desplazar_letra(
+                letra,
+                desplazamiento
+            )
+
+        self._historial[texto] = resultado
+
+        return resultado
+
+
+
+# USO
+
+cs = CodificadorSimple()
+
+print(cs.codificar_texto("hola", 2))
+
+print(cs._historial)
+
+
+# 5. PRUEBA PASO A PASO
+#
+# Se crea el objeto cs de la clase CodificadorSimple.
+#
+# Estado inicial:
+#
+# _historial = {}
+#
+#
+# Se ejecuta:
+#
+# codificar_texto("hola", 2)
+#
+# Se recorre cada letra:
+#
+# h:
+# código de h se desplaza 2 posiciones.
+# h -> j
+#
+# o:
+# o -> q
+#
+# l:
+# l -> n
+#
+# a:
+# a -> c
+#
+# Resultado:
+#
+# "jqnc"
+#
+#
+# Se guarda en historial:
+#
+# {
+#     "hola": "jqnc"
+# }
+#
+#
+# SALIDA ESPERADA:
+#
+# jqnc
+#
+# {
+#     "hola": "jqnc"
+# }
