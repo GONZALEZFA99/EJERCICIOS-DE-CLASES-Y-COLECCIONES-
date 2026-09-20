@@ -1,0 +1,272 @@
+# EJERCICIO 20.1 -ANALIZADORPALABRAS
+
+
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Textos y letras de búsqueda.
+#
+# Ejemplo:
+#
+# ap = AnalizadorPalabras()
+#
+# print(ap.buscar_por_inicio(
+#     "perro pato gato pez",
+#     "p"
+# ))
+#
+# print(ap.agrupar_por_tamaño(
+#     "sol perro gato"
+# ))
+#
+# print(ap.palabras_sin_repetir())
+#
+#
+# PROCESO:
+# Separar el texto utilizando split().
+# Buscar palabras que comiencen con una letra usando startswith().
+# Agrupar palabras según la cantidad de caracteres usando len().
+# Guardar palabras analizadas.
+# Convertir la lista de palabras a un conjunto para eliminar repetidos.
+#
+# SALIDA:
+#
+# Lista de palabras encontradas.
+#
+# Diccionario agrupado por tamaño.
+#
+# Conjunto de palabras únicas.
+#
+#
+# COLECCIONES PRINCIPALES:
+# - Lista para guardar resultados.
+# - Diccionario de listas para agrupaciones.
+# - Set para valores únicos.
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase AnalizadorPalabras
+#
+#     _palabras = []
+#
+#
+# buscar_por_inicio(texto, letra)
+#     |
+#     --> separar texto en palabras
+#     --> recorrer palabras
+#     --> verificar inicio con startswith()
+#     --> guardar palabra encontrada
+#     --> guardar palabra en historial
+#     --> retornar lista
+#
+#
+# agrupar_por_tamaño(texto)
+#     |
+#     --> crear diccionario grupos
+#     --> separar palabras
+#     --> obtener tamaño con len()
+#     --> si tamaño no existe crear lista
+#     --> agregar palabra al grupo
+#     --> guardar palabra en historial
+#     --> retornar diccionario
+#
+#
+# palabras_sin_repetir()
+#     |
+#     --> convertir lista a set()
+#     --> retornar palabras únicas
+
+
+# 3. PATRÓN
+#
+# Uso de split() para separar un texto.
+# Uso de startswith() para buscar palabras por letra inicial.
+# Uso de len() para conocer cantidad de caracteres.
+# Diccionario con listas para agrupar datos.
+# Set para eliminar valores repetidos.
+
+
+# 4. CÓDIGO
+
+
+class AnalizadorPalabras:
+
+    def __init__(self):
+
+        self._palabras = []
+
+
+    def buscar_por_inicio(self, texto, letra):
+
+        resultado = []
+
+        palabras = texto.split()
+
+
+        for palabra in palabras:
+
+            if palabra.startswith(letra):
+
+                resultado.append(palabra)
+
+                self._palabras.append(palabra)
+
+
+        return resultado
+
+
+
+    def agrupar_por_tamaño(self, texto):
+
+        grupos = {}
+
+        palabras = texto.split()
+
+
+        for palabra in palabras:
+
+            tamaño = len(palabra)
+
+
+            if tamaño not in grupos:
+
+                grupos[tamaño] = []
+
+
+            grupos[tamaño].append(palabra)
+
+            self._palabras.append(palabra)
+
+
+        return grupos
+
+
+
+    def palabras_sin_repetir(self):
+
+        return set(self._palabras)
+
+
+
+# USO
+
+ap = AnalizadorPalabras()
+
+
+print(ap.buscar_por_inicio(
+    "perro pato gato pez",
+    "p"
+))
+
+
+print(ap.agrupar_por_tamaño(
+    "sol perro gato"
+))
+
+
+print(ap.palabras_sin_repetir())
+
+
+
+# 5. PRUEBA PASO A PASO
+#
+# Se crea el objeto ap de la clase AnalizadorPalabras.
+#
+# Estado inicial:
+#
+# _palabras = []
+#
+#
+# PRIMERA PRUEBA:
+#
+# buscar_por_inicio(
+#     "perro pato gato pez",
+#     "p"
+# )
+#
+# Se separa el texto:
+#
+# ["perro","pato","gato","pez"]
+#
+# Se revisa cada palabra:
+#
+# perro -> empieza con p -> guardar
+# pato  -> empieza con p -> guardar
+# gato  -> no cumple
+# pez   -> empieza con p -> guardar
+#
+# Resultado:
+#
+# ["perro","pato","pez"]
+#
+#
+# _palabras queda:
+#
+# ["perro","pato","pez"]
+#
+#
+# SEGUNDA PRUEBA:
+#
+# agrupar_por_tamaño("sol perro gato")
+#
+# Palabras:
+#
+# sol
+# perro
+# gato
+#
+# Tamaños:
+#
+# sol -> 3
+# perro -> 5
+# gato -> 4
+#
+# Diccionario:
+#
+# {
+#     3:["sol"],
+#     5:["perro"],
+#     4:["gato"]
+# }
+#
+#
+# Se agregan al historial:
+#
+# _palabras =
+# [
+#   "perro",
+#   "pato",
+#   "pez",
+#   "sol",
+#   "perro",
+#   "gato"
+# ]
+#
+#
+# TERCERA PRUEBA:
+#
+# palabras_sin_repetir()
+#
+# Se convierte la lista a set:
+#
+# {
+#   "perro",
+#   "pato",
+#   "pez",
+#   "sol",
+#   "gato"
+# }
+#
+#
+# SALIDA ESPERADA:
+#
+# ["perro","pato","pez"]
+#
+# {
+#     3:["sol"],
+#     5:["perro"],
+#     4:["gato"]
+# }
+#
+# {"perro","pato","pez","sol","gato"}
