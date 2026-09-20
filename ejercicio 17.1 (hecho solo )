@@ -1,0 +1,235 @@
+# EJERCICIO 17.1 - CLASIFICADORALTURAS
+# 1. ENTENDER EL PROBLEMA
+#
+# ENTRADA:
+# Alturas individuales o en lote.
+#
+# Ejemplo:
+# ca = ClasificadorAlturas()
+#
+# ca.agrupar_por_categoria(140,160,175,190)
+#
+# ca.promedio_categoria("medio")
+#
+# PROCESO:
+# Clasificar cada altura usando if/elif.
+# Guardar las alturas dentro de listas según su categoría.
+# Calcular el promedio de una categoría específica.
+#
+# SALIDA:
+# {
+#     "bajo":[140],
+#     "medio":[160,175],
+#     "alto":[190]
+# }
+#
+# 167.5
+#
+# COLECCIONES PRINCIPALES:
+# Diccionario de listas:
+# categoría -> [alturas]
+
+
+# 2. BOSQUEJO A MANO
+#
+# Clase ClasificadorAlturas
+#
+#     _alturas = {}
+#
+#
+# clasificar_altura(altura)
+#     |
+#     --> Si altura < 150
+#             retornar "bajo"
+#     --> Si altura <= 180
+#             retornar "medio"
+#     --> Si no
+#             retornar "alto"
+#
+#
+# agrupar_por_categoria(*alturas)
+#     |
+#     --> recorrer alturas
+#     --> obtener categoría usando clasificar_altura()
+#     --> si categoría no existe crear lista
+#     --> agregar altura a la lista
+#     --> retornar diccionario
+#
+#
+# promedio_categoria(categoria)
+#     |
+#     --> buscar lista de categoría
+#     --> sumar alturas
+#     --> dividir para cantidad de elementos
+#     --> retornar promedio
+
+
+# 3. PATRÓN
+#
+# Diccionario de listas para agrupar información.
+# Uso de if/elif para clasificar valores.
+# Uso de *alturas para recibir varios datos.
+# Reutilización del método clasificar_altura().
+# Uso de sum() y len() para calcular promedios.
+
+
+# 4. CÓDIGO
+
+
+class ClasificadorAlturas:
+
+    def __init__(self):
+        self._alturas = {}
+
+
+    def clasificar_altura(self, altura):
+
+        if altura < 150:
+            return "bajo"
+
+        elif altura <= 180:
+            return "medio"
+
+        else:
+            return "alto"
+
+
+
+    def agrupar_por_categoria(self, *alturas):
+
+        for altura in alturas:
+
+            categoria = self.clasificar_altura(altura)
+
+            if categoria not in self._alturas:
+                self._alturas[categoria] = []
+
+            self._alturas[categoria].append(altura)
+
+
+        return self._alturas
+
+
+
+    def promedio_categoria(self, categoria):
+
+        if categoria not in self._alturas:
+            return 0
+
+        lista_alturas = self._alturas[categoria]
+
+        return sum(lista_alturas) / len(lista_alturas)
+
+
+
+# USO
+
+ca = ClasificadorAlturas()
+
+print(ca.agrupar_por_categoria(140,160,175,190))
+
+print(ca.promedio_categoria("medio"))
+
+
+
+# 5. PRUEBA PASO A PASO
+#
+# Se crea el objeto ca de la clase ClasificadorAlturas.
+#
+# Estado inicial:
+#
+# _alturas = {}
+#
+#
+# Se ingresan las alturas:
+#
+# 140, 160, 175, 190
+#
+#
+# Primera altura:
+#
+# 140
+#
+# 140 < 150
+#
+# Categoría:
+# bajo
+#
+# Diccionario:
+# {
+#    "bajo":[140]
+# }
+#
+#
+# Segunda altura:
+#
+# 160
+#
+# Está entre 150 y 180.
+#
+# Categoría:
+# medio
+#
+# Diccionario:
+# {
+#    "bajo":[140],
+#    "medio":[160]
+# }
+#
+#
+# Tercera altura:
+#
+# 175
+#
+# Categoría:
+# medio
+#
+# Diccionario:
+# {
+#    "bajo":[140],
+#    "medio":[160,175]
+# }
+#
+#
+# Cuarta altura:
+#
+# 190
+#
+# 190 > 180
+#
+# Categoría:
+# alto
+#
+# Diccionario final:
+#
+# {
+#    "bajo":[140],
+#    "medio":[160,175],
+#    "alto":[190]
+# }
+#
+#
+# Para promedio_categoria("medio"):
+#
+# Lista:
+# [160,175]
+#
+# Suma:
+# 160 + 175 = 335
+#
+# Cantidad:
+# 2
+#
+# Promedio:
+# 335 / 2 = 167.5
+#
+#
+# SALIDA ESPERADA:
+#
+# {
+# "bajo":[140],
+# "medio":[160,175],
+# "alto":[190]
+# }
+#
+# 167.5
